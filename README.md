@@ -93,3 +93,261 @@ CMake Error at build/cmake_install.cmake:46 (file):
 
 # Compile(Need help setting up a Makefile for an SDL C++ tutorial - Having trouble with linking object files)
 - https://stackoverflow.com/questions/32981617/need-help-setting-up-a-makefile-for-an-sdl-c-tutorial-having-trouble-with-li
+
+# System can't find libSDL3.so.0 at runtime?
+- https://stackoverflow.com/questions/78861132/system-cant-find-libsdl3-so-0-at-runtime
+
+- fish PATH set
+
+```fish
+# Add HomeBrew's bin directory to path so you can use HomeBrew's binaries like `starship`
+# Fish uses `fish_add_path` instead of `export PATH` modify $PATH.
+# macOS PATH(homebrew)
+
+fish_add_path "$HOME/.local/bin"
+fish_add_path "$HOME/utilities/nvim-linux64/bin"
+fish_add_path "$HOME/utilities/zig-linux-x86_64"
+fish_add_path "$HOME/utilities/zls/zig-out/bin"
+fish_add_path "$HOME/.cargo/bin"
+# fish_add_path "$HOME/.wasmer/bin"
+
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+
+# add Path
+function addpaths
+    contains -- $argv $fish_user_paths
+       or set -U fish_user_paths $fish_user_paths $argv
+    echo "Updated PATH: $PATH"
+end
+
+# Remove path
+function removepath
+    if set -l index (contains -i $argv[1] $PATH)
+        set --erase --universal fish_user_paths[$index]
+        echo "Updated PATH: $PATH"
+    else
+        echo "$argv[1] not found in PATH: $PATH"
+    end
+
+end
+
+## Mojo PATH
+# set -gx MOJO_PATH $(modular config mojo.path)
+# set -gx MODULAR_HOME $HOME/.modular
+## Mojo MAX
+# set -gx MAX_PATH $(modular config max.path)
+# set -gx MAX_PATH $HOME/.modular/bin
+
+# C++ PATH
+set -gx CPLUS_INCLUDE_PATH /usr/include/c++/13 /usr/include/x86_64-linux-gnu/c++/13 /usr/lib/gcc/x86_64-linux-gnu/11 /usr/lib/gcc/x86_64-linux-gnu/13 $CPLUS_INCLUDE_PATH
+
+
+# python Tensflow CUDA PATH
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda/
+
+# SDL3 PATH
+set -gx LD_LIBRARY_PATH /usr/local/lib
+
+# WASM (wasmer run)
+# set -gx WASMER_DIR $HOME/.wasmer
+
+end
+
+# Enable Starship prompt
+starship init fish | source
+
+# Wasmer
+# export WASMER_DIR="/Users/g/.wasmer"
+# [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+# alias
+alias clang++="clang++-19"
+# alias clangd="clangd-19"
+
+```
+
+- c just 
+
+```justfile
+# which clang
+clang_which := `which clang`
+
+# Source and target directories
+src_dir := "./src"
+target_dir := "./target"
+
+# Files
+source := src_dir+"/main.c"
+target := target_dir+"/main"
+
+# Common flags
+ldflags_common := "-pedantic -pthread -pedantic-errors -lm -Wall -Wextra -ggdb"
+ldflags_debug := "-c -pthread -lm -Wall -Wextra -ggdb"
+ldflags_emit_llvm := "-S -emit-llvm"
+ldflags_assembly := "-Wall -save-temps"
+ldflags_fsanitize_address := "-O1 -g -fsanitize=address -fno-omit-frame-pointer -c"
+ldflags_fsanitize_object := "-g -fsanitize=address"
+ldflags_fsanitize_valgrind := "-fsanitize=address -g3"
+ldflags_optimize :=  "-lSDL2 -lSDL3 -MMD -MP -Wall"
+
+# ldflags_optimize :=  "-Wall -O3 -pedantic -pthread -pedantic-errors -lm -Wextra -ggdb"
+
+# (C)clang compile
+r:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_common}} -o {{target}} {{source}}
+	{{target}}
+
+# (C)clang compile(Optimization)
+ro:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_optimize}} -o {{target}} {{source}}
+	{{target}}
+
+# zig C compile
+zr:
+	rm -rf target
+	mkdir -p target
+	zig {{ldflags_common}} -o {{target}} {{source}}
+	{{target}}
+
+# clang build
+b:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_debug}} -o {{target}} {{source}}
+
+# clang LLVM emit-file
+ll:
+	rm -rf target
+	mkdir -p target
+	cp -rf {{src_dir}}/main.c ./
+	clang {{ldflags_emit_llvm}} main.c
+	mv *.ll {{target_dir}}
+	clang {{ldflags_common}} -o {{target}} {{source}}
+	mv *.cpp {{target_dir}}
+	rm -rf *.out
+
+# Assembly emit-file
+as:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_assembly}} -o {{target}} {{source}}
+	mv *.i {{target_dir}}
+	mv *.o {{target_dir}}
+	mv *.s {{target_dir}}
+	mv *.bc {{target_dir}}
+
+# clang fsanitize_address
+fsan:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_fsanitize_address}} {{source}} -o {{target}}
+	clang {{ldflags_fsanitize_object}} {{target}}
+	mv *.out {{target_dir}}
+
+# leak memory check(valgrind)
+mem:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_fsanitize_valgrind}} {{source}} -o {{target}}
+	valgrind --leak-check=full {{target}}
+
+# object file emit-file
+obj:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_assembly}} -o {{target}} {{source}}
+	mv *.ii {{target_dir}}
+	mv *.o {{target_dir}}
+	mv *.s {{target_dir}}
+	mv *.bc {{target_dir}}
+	objdump --disassemble -S -C {{target_dir}}/main.o
+
+# hex view
+xx:
+	rm -rf target
+	mkdir -p target
+	clang {{ldflags_fsanitize_valgrind}} {{source}} -o {{target}}
+	xxd -c 16 {{target}}
+
+# clean files
+clean:
+	rm -rf {{target_dir}} *.out {{src_dir}}/*.out *.bc {{src_dir}}/target/ *.dSYM {{src_dir}}/*.dSYM *.i *.o *.s
+
+# C init
+init:
+	mkdir -p src
+	echo '#include <stdio.h>' > src/main.c
+	echo '' >> src/main.c
+	echo 'int main(void) {' >> src/main.c
+	echo '    printf("Hello world C lang ");' >> src/main.c
+	echo '    return 0;' >> src/main.c
+	echo '}' >> src/main.c
+
+# Debugging(VSCode)
+vscode:
+	rm -rf .vscode
+	mkdir -p .vscode
+	echo '{' > .vscode/launch.json
+	echo '    "version": "0.2.0",' >> .vscode/launch.json
+	echo '    "configurations": [' >> .vscode/launch.json
+	echo '        {' >> .vscode/launch.json
+	echo '            "type": "lldb",' >> .vscode/launch.json
+	echo '            "request": "launch",' >> .vscode/launch.json
+	echo '            "name": "Launch",' >> .vscode/launch.json
+	echo '            "program": "${workspaceFolder}/target/${fileBasenameNoExtension}",' >> .vscode/launch.json
+	echo '            "args": [],' >> .vscode/launch.json
+	echo '            "cwd": "${workspaceFolder}"' >> .vscode/launch.json
+	echo '            // "preLaunchTask": "C/C++: clang build active file"' >> .vscode/launch.json
+	echo '        },' >> .vscode/launch.json
+	echo '        {' >> .vscode/launch.json
+	echo '            "name": "gcc - Build and debug active file",' >> .vscode/launch.json
+	echo '            "type": "cppdbg",' >> .vscode/launch.json
+	echo '            "request": "launch",' >> .vscode/launch.json
+	echo '            "program": "${fileDirname}/target/${fileBasenameNoExtension}",' >> .vscode/launch.json
+	echo '            "args": [],' >> .vscode/launch.json
+	echo '            "stopAtEntry": false,' >> .vscode/launch.json
+	echo '            "cwd": "${fileDirname}",' >> .vscode/launch.json
+	echo '            "environment": [],' >> .vscode/launch.json
+	echo '            "externalConsole": false,' >> .vscode/launch.json
+	echo '            "MIMode": "lldb"' >> .vscode/launch.json
+	echo '            // "tasks": "C/C++: clang build active file"' >> .vscode/launch.json
+	echo '        }' >> .vscode/launch.json
+	echo '    ]' >> .vscode/launch.json
+	echo '}' >> .vscode/launch.json
+	echo '{' > .vscode/tasks.json
+	echo '    "tasks": [' >> .vscode/tasks.json
+	echo '        {' >> .vscode/tasks.json
+	echo '            "type": "cppbuild",' >> .vscode/tasks.json
+	echo '            "label": "C/C++: clang build active file",' >> .vscode/tasks.json
+	echo '            "command": "{{clang_which}}",' >> .vscode/tasks.json
+	echo '            "args": [' >> .vscode/tasks.json
+	echo '                "-c",' >> .vscode/tasks.json
+	echo '                "-fcolor-diagnostics",' >> .vscode/tasks.json
+	echo '                "-fansi-escape-codes",' >> .vscode/tasks.json
+	echo '                "-g",' >> .vscode/tasks.json
+	echo '                "${file}",' >> .vscode/tasks.json
+	echo '                "-o",' >> .vscode/tasks.json
+	echo '                "${fileDirname}/target/${fileBasenameNoExtension}"' >> .vscode/tasks.json
+	echo '            ],' >> .vscode/tasks.json
+	echo '            "options": {' >> .vscode/tasks.json
+	echo '                "cwd": "${fileDirname}"' >> .vscode/tasks.json
+	echo '            },' >> .vscode/tasks.json
+	echo '            "problemMatcher": [' >> .vscode/tasks.json
+	echo '                "$gcc"' >> .vscode/tasks.json
+	echo '            ],' >> .vscode/tasks.json
+	echo '            "group": {' >> .vscode/tasks.json
+	echo '                "kind": "build",' >> .vscode/tasks.json
+	echo '                "isDefault": true' >> .vscode/tasks.json
+	echo '            },' >> .vscode/tasks.json
+	echo '            "detail": "Task generated by Debugger."' >> .vscode/tasks.json
+	echo '        }' >> .vscode/tasks.json
+	echo '    ],' >> .vscode/tasks.json
+	echo '    "version": "2.0.0"' >> .vscode/tasks.json
+	
+```
