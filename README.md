@@ -190,10 +190,10 @@ ldflags_assembly := "-Wall -save-temps"
 ldflags_fsanitize_address := "-O1 -g -fsanitize=address -fno-omit-frame-pointer -c"
 ldflags_fsanitize_object := "-g -fsanitize=address"
 ldflags_fsanitize_valgrind := "-fsanitize=address -g3"
-# SDL3 세팅
-ldflags_optimize :=  "-lSDL3 -MMD -MP -Wall"
+# SDL3 세팅 최적화 O2
+ldflags_optimize :=  "-lSDL3 -MMD -MP -Wall -O2"
 # SDL 2 세팅
-# ldflags_optimize :=  "-lSDL2 -MMD -MP -Wall"
+# ldflags_optimize :=  "-lSDL2 -MMD -MP -Wall -O2"
 
 # ldflags_optimize :=  "-Wall -O3 -pedantic -pthread -pedantic-errors -lm -Wextra -ggdb"
 
