@@ -14,6 +14,8 @@ SDL officially supports Windows, macOS, Linux, iOS, and Android, and several oth
 - https://github.com/libsdl-org/SDL
   - https://libsdl.org/
 
+<hr / >
+
 - https://crates.io/crates/sdl3
   - https://github.com/revmischa/sdl3-rs
 
