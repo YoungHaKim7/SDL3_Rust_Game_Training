@@ -86,7 +86,7 @@ sudo cmake --install . --config Release
 
 CMake Error at build/cmake_install.cmake:46 (file):
   file INSTALL cannot copy file
-  "/home/gygy/utilities/SDL2-2.30.10/build/libSDL2-2.0.so.0.3000.10" to
+  "/home/g/utilities/SDL2-2.30.10/build/libSDL2-2.0.so.0.3000.10" to
   "/usr/local/lib/libSDL2-2.0.so.0.3000.10": Permission denied.
 
 ```
