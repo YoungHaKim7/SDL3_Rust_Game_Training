@@ -43,6 +43,20 @@ sdl3 = "0.11.8"
 
 # Install
 
+- SDL3 Install
+  - https://wiki.libsdl.org/SDL3/Installation
+
+```bash
+git clone https://github.com/libsdl-org/SDL
+cd SDL
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --config Release --parallel
+sudo cmake --install . --config Release
+```
+
+- 오류 난거 참고 하자
 ```bash
 --   SDL_XINPUT                  (Wanted: OFF): OFF
 -- 
