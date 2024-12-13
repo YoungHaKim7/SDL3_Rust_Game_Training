@@ -90,3 +90,6 @@ CMake Error at build/cmake_install.cmake:46 (file):
   "/usr/local/lib/libSDL2-2.0.so.0.3000.10": Permission denied.
 
 ```
+
+# Compile(Need help setting up a Makefile for an SDL C++ tutorial - Having trouble with linking object files)
+- https://stackoverflow.com/questions/32981617/need-help-setting-up-a-makefile-for-an-sdl-c-tutorial-having-trouble-with-li
