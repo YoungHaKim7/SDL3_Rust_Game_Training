@@ -29,3 +29,14 @@ cargo add sdl3
 ```bash
 sdl3 = "0.11.8"
 ```
+
+# Documentation
+
+- [SDL3 higher-level documentation.](https://docs.rs/sdl3/latest/sdl3/)
+- [SDL3-sys lower-level bindings documentation](https://docs.rs/sdl3-sys/latest/sdl3_sys/)
+
+
+# History
+
+- This project was forked from [Rust-sdl2](https://github.com/Rust-sdl2/rust-sdl2) and the SDL2 code migrated to SDL3 according to the [SDL2->SDL3 migration guide.](https://github.com/libsdl-org/SDL/blob/main/docs/README-migration.md)
+  - If you want a library compatible with earlier versions of SDL, please see [Rust-sdl2.](https://github.com/Rust-sdl2/rust-sdl2)
