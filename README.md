@@ -219,7 +219,6 @@ if status is-interactive
     set -gx DYLD_FRAMEWORK_PATH /Library/Frameworks
 
     set -gx LIBRARY_PATH /opt/homebrew/lib
-    set -gx LC_RPATH $HOME/utilities/SDL3/SDL/build
 
     # sdk man(java, kotlin)
     # set -gx
