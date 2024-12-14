@@ -94,6 +94,21 @@ sudo cmake --install . --config Release
 sudo apt install libsdl2-mixer-dev
 ```
 
+- SDL2 Install
+  - https://wiki.libsdl.org/SDL2/Installation
+
+```bash
+git clone https://github.com/libsdl-org/SDL.git -b SDL2
+cd SDL
+mkdir build
+cd build
+../configure
+make
+sudo make install
+```
+
+<hr />
+
 # macOS(SDL2, SDL3 설치)
 - [[Ep. 4] [Setup] SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=eWPOTULjG4p9pSmH)
 
