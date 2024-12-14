@@ -11,6 +11,9 @@
 - [FishShell Setting](#macos-pathfishshell)
   - [FishShell 전체세팅](#system-cant-find-libsdl3so0-at-runtime)
 
+- justfile setting
+  - [C언어 justfile](#c-justfile)
+
 - [오류난거 참고 해서 힌트를 찾자_성공은 실패의 어머니](#오류난거-참고)
 
 <hr />
