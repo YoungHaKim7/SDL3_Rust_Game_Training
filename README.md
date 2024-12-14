@@ -70,6 +70,13 @@ cmake --build . --config Release --parallel
 sudo cmake --install . --config Release
 ```
 
+# macOS(SDL2, SDL3 설치)
+- [[Ep. 4] [Setup] SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=eWPOTULjG4p9pSmH)
+
+<hr />
+
+# 오류난거 참고
+
 - 오류 난거 참고 하자
 ```bash
 --   SDL_XINPUT                  (Wanted: OFF): OFF
