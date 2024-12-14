@@ -53,6 +53,14 @@ version = "0.1.3+SDL3-preview-3.1.6"
 # 최신 Release
 - [https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6)
 
+# Tutorial
+
+- SDL3
+  - https://wiki.libsdl.org/SDL3/Tutorials/FrontPage
+
+- SDL2
+  - https://wiki.libsdl.org/SDL2/Tutorials
+
 # History
 
 - This project was forked from [Rust-sdl2](https://github.com/Rust-sdl2/rust-sdl2) and the SDL2 code migrated to SDL3 according to the [SDL2->SDL3 migration guide.](https://github.com/libsdl-org/SDL/blob/main/docs/README-migration.md)
