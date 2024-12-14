@@ -73,6 +73,17 @@ sudo cmake --install . --config Release
 # macOS(SDL2, SDL3 설치)
 - [[Ep. 4] [Setup] SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=eWPOTULjG4p9pSmH)
 
+
+# macOS PATH(fishshell)
+
+- `config.fish`
+  - https://www.csalmeida.com/log/how-to-install-sdl2-on-macos/
+
+```
+    set -gx DYLD_FRAMEWORK_PATH /Library/Frameworks
+
+```
+
 <hr />
 
 # 오류난거 참고
