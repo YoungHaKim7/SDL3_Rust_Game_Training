@@ -25,10 +25,22 @@ SDL officially supports Windows, macOS, Linux, iOS, and Android, and several oth
 cargo add sdl3  
 ```
 
-- toml
+- `Cargo.toml` 
 ```bash
 sdl3 = "0.11.8"
 ```
+
+# `Cargo.toml` 난 이렇게 함.
+
+```toml
+
+[dependencies]
+sdl3 = { version = "0", features = [] }
+
+[dependencies.sdl3-sys]
+version = "0.1.3+SDL3-preview-3.1.6"
+```
+
 
 # Documentation
 
