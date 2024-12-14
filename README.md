@@ -73,6 +73,13 @@ cmake --build . --config Release --parallel
 sudo cmake --install . --config Release
 ```
 
+- Doom Install필수
+  - https://gitlab.com/flukejones/room4doom 
+
+```
+sudo apt install libsdl2-mixer-dev
+```
+
 # macOS(SDL2, SDL3 설치)
 - [[Ep. 4] [Setup] SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=eWPOTULjG4p9pSmH)
 
