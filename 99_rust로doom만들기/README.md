@@ -2,6 +2,13 @@
 - https://gitlab.com/flukejones/room4doom
 
 
+- Doom Install필수
+  - https://gitlab.com/flukejones/room4doom 
+
+```
+sudo apt install libsdl2-mixer-dev libsdl2-dev
+```
+
 <hr />
 
 # C++로 Doom만들기
