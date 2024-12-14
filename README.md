@@ -47,6 +47,8 @@ version = "0.1.3+SDL3-preview-3.1.6"
 - [SDL3 higher-level documentation.](https://docs.rs/sdl3/latest/sdl3/)
 - [SDL3-sys lower-level bindings documentation](https://docs.rs/sdl3-sys/latest/sdl3_sys/)
 
+# 최신 Release
+- [https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6)
 
 # History
 
