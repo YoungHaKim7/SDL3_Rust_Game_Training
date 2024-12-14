@@ -23,6 +23,7 @@
 	  - [Rust `Cargo.toml`세팅](#cargotoml-난-이렇게-함)
 	- [Rust에 연결하기 SDL2-rs](#sdl2-rust)
 	- [Rust로 만든 역사 정확하게는 그냥 API땅기는거임.(SDL2 ~ SDL3까지 과정)](#history)
+	  - [SDL2->SDL3 migration guide.](https://github.com/libsdl-org/SDL/blob/main/docs/README-migration.md)
 
 <hr />
 
