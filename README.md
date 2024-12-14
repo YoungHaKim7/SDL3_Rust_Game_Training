@@ -83,8 +83,9 @@ sudo cmake --install . --config Release
   - https://www.csalmeida.com/log/how-to-install-sdl2-on-macos/
 
 ```
+    # macOS SDL 2 , 3 Path
     set -gx DYLD_FRAMEWORK_PATH /Library/Frameworks
-
+    set -gx LIBRARY_PATH /opt/homebrew/lib
 ```
 
 <hr />
