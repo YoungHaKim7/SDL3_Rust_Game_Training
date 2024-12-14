@@ -1,8 +1,29 @@
 # link
 
+- [SDL3코어엔진은 C언어로 만듬Simple Directmedia Layer](#c언어로-만듬simple-directmedia-layer) 
+  - [SDL3 & SDL2 공식문서](#documentation)
+	  - [SDL Tutorial(SDL3, SDL2)](#tutorial)
+- [SDL3최신 release다운받기](#최신-release)
+  - [SDL3 & SDL2 Install_ git clone으로cmake함](#install)
+	  - macOS
+		  - [macOS설치 방법인데  위 git clone을 마지막에 해줘야함.](#macossdl2-sdl3-설치)
+
+- [FishShell Setting](#macos-pathfishshell)
+  - [FishShell 전체세팅](#system-cant-find-libsdl3so0-at-runtime)
+
+- [오류난거 참고 해서 힌트를 찾자_성공은 실패의 어머니](#오류난거-참고)
+
 <hr />
 
-# SDL3_Rust_Game_Training
+- Rust 
+  - [Rust에 연결하기 SDL3-rs](#rust-sdl3)
+	  - [Rust `Cargo.toml`세팅](#cargotoml-난-이렇게-함)
+	- [Rust에 연결하기 SDL2-rs](#sdl2-rust)
+	- [Rust로 만든 역사 정확하게는 그냥 API땅기는거임.(SDL2 ~ SDL3까지 과정)](#history)
+
+<hr />
+
+# SDL3_Rust_Game_Training[|🔝|](#link)
 
 - SDL3-rs[![crates.io](https://img.shields.io/crates/v/sdl3.svg)](https://crates.io/crates/sdl3)![Crates.io](https://img.shields.io/crates/l/sdl3)![Downloads](https://img.shields.io/crates/d/sdl3.svg)<a href="https://github.com/libsdl-org/SDL"><img alt="githubicon" width="20px" src="https://user-images.githubusercontent.com/67513038/218287708-001511d7-1cce-42d3-92d2-4a61193b38f0.png" /></a>
 ![star](https://img.shields.io/github/stars/revmischa/sdl3-rs.svg)
@@ -13,14 +34,14 @@ SDL is the Simple Directmedia Library, a cross-platform library to abstract the 
 
 SDL officially supports Windows, macOS, Linux, iOS, and Android, and several other platforms.    
 
-# C언어로 만듬Simple Directmedia Layer  
+# C언어로 만듬Simple Directmedia Layer[|🔝|](#link)  
 
 - https://github.com/libsdl-org/SDL
   - https://libsdl.org/
 
 <hr / >
 
-# Rust SDL3
+# Rust SDL3[|🔝|](#link)
 
 - https://crates.io/crates/sdl3
   - https://github.com/revmischa/sdl3-rs
@@ -45,10 +66,10 @@ sdl3 = { version = "0", features = [] }
 version = "0.1.3+SDL3-preview-3.1.6"
 ```
 
-# SDL2 (Rust)
+# SDL2 (Rust)[|🔝|](#link)
 - https://github.com/Rust-SDL2/rust-sdl2
 
-# Documentation
+# Documentation[|🔝|](#link)
 
 - [SDL3 higher-level documentation.](https://docs.rs/sdl3/latest/sdl3/)
 - [SDL3-sys lower-level bindings documentation](https://docs.rs/sdl3-sys/latest/sdl3_sys/)
@@ -56,10 +77,10 @@ version = "0.1.3+SDL3-preview-3.1.6"
 - [SDL3 wiki 문서_https://wiki.libsdl.org/SDL3/FrontPage](https://wiki.libsdl.org/SDL3/FrontPage)
 - [SDL2 wiki 문서_https://wiki.libsdl.org/SDL2/FrontPage](https://wiki.libsdl.org/SDL2/FrontPage)
 
-# 최신 Release
+# 최신 Release[|🔝|](#link)
 - [https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6)
 
-# Tutorial
+# Tutorial[|🔝|](#link)
 
 - SDL3
   - https://wiki.libsdl.org/SDL3/Tutorials/FrontPage
@@ -67,12 +88,12 @@ version = "0.1.3+SDL3-preview-3.1.6"
 - SDL2
   - https://wiki.libsdl.org/SDL2/Tutorials
 
-# History
+# History[|🔝|](#link)
 
 - This project was forked from [Rust-sdl2](https://github.com/Rust-sdl2/rust-sdl2) and the SDL2 code migrated to SDL3 according to the [SDL2->SDL3 migration guide.](https://github.com/libsdl-org/SDL/blob/main/docs/README-migration.md)
   - If you want a library compatible with earlier versions of SDL, please see [Rust-sdl2.](https://github.com/Rust-sdl2/rust-sdl2)
 
-# Install
+# Install[|🔝|](#link)
 
 - SDL3 Install
   - https://wiki.libsdl.org/SDL3/Installation
@@ -109,11 +130,11 @@ sudo make install
 
 <hr />
 
-# macOS(SDL2, SDL3 설치)
+# macOS(SDL2, SDL3 설치)[|🔝|](#link)
 - [[Ep. 4] [Setup] SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=eWPOTULjG4p9pSmH)
 
 
-# macOS PATH(fishshell)
+# macOS PATH(fishshell)[|🔝|](#link)
 
 - `config.fish`
   - https://www.csalmeida.com/log/how-to-install-sdl2-on-macos/
@@ -126,7 +147,7 @@ sudo make install
 
 <hr />
 
-# 오류난거 참고
+# 오류난거 참고[|🔝|](#link)
 
 - 오류 난거 참고 하자
 ```bash
@@ -163,10 +184,10 @@ CMake Error at build/cmake_install.cmake:46 (file):
 
 ```
 
-# Compile(Need help setting up a Makefile for an SDL C++ tutorial - Having trouble with linking object files)
+# Compile(Need help setting up a Makefile for an SDL C++ tutorial - Having trouble with linking object files)[|🔝|](#link)
 - https://stackoverflow.com/questions/32981617/need-help-setting-up-a-makefile-for-an-sdl-c-tutorial-having-trouble-with-li
 
-# System can't find libSDL3.so.0 at runtime?
+# System can't find libSDL3.so.0 at runtime?[|🔝|](#link)
 - https://stackoverflow.com/questions/78861132/system-cant-find-libsdl3-so-0-at-runtime
 
 - fish PATH set
@@ -233,7 +254,7 @@ export WASMER_DIR="/Users/g/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 ```
 
-- c just 
+# c `justfile`[|🔝|](#link)
 
 ```justfile
 # which clang
