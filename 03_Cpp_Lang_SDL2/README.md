@@ -1,6 +1,14 @@
 # MikeShah(C++개발자 배울게 많다.) 
 - https://github.com/MikeShah/SDL2_Tutorials
 
+<hr />
+
+# link
+
+- [justfile_macOS전용](#macosmacos전용justfile)
+
+<hr />
+
 # macOS설치
 - [Ep. 4 Setup/ SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=ZAfU_EoyvQn0h23c)
 
