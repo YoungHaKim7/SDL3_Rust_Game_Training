@@ -27,7 +27,7 @@
 
 <hr />
 
-- [OpenCV 와 Open GV의 차이점](#opencv-vs-opengc)
+- [OpenCV 와 OpenGV의 차이점](#opencv-vs-opengc)
 
 <hr />
 
@@ -457,15 +457,15 @@ vscode:
 
 # OpenCV vs OpenGC[|🔝|](#link)
 - https://ho-j.tistory.com/2
-- 주요 알고리즘(OpenCV)OpenCV(Open Source Computer Vision)는 오픈 소스 컴퓨터 비전 라이브러리이다. 실시간 이미지 프로세싱에 중점을 둔 라이브러리이다.
- - 이진화(binarization)
- - 노이즈 제거
- - 외곽선 검출(edge detection)
- - 패턴 인식
- - 기계학습(machine learning)
- - ROI(Region Of Interest) 설정
- - 이미지 변환(image warping)
- - 하드웨어 가속
+- 주요 알고리즘(OpenCV, Open Source Computer Vision)는 오픈 소스 컴퓨터 비전 라이브러리이다. 실시간 이미지 프로세싱에 중점을 둔 라이브러리이다.
+  - 이진화(binarization)
+  - 노이즈 제거
+  - 외곽선 검출(edge detection)
+  - 패턴 인식
+  - 기계학습(machine learning)
+  - ROI(Region Of Interest) 설정
+  - 이미지 변환(image warping)
+  - 하드웨어 가속
 
 <hr />
 
