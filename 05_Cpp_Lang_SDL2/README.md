@@ -6,15 +6,17 @@
 
 <hr />
 
-# C++ 게임만들기 Tutorial
-- [모아보기Remaking Cavestory in C++ |  Limeoats](https://youtube.com/playlist?list=PLNOBk_id22bw6LXhrGfhVwqQIa-M2MsLa&si=ljzoW-9RzauwAaTJ)
-  - https://github.com/Limeoats/cavestory-development
-
 # link
 
 - [justfile_macOS전용](#macosmacos전용justfile)
 
 <hr />
+
+# C++ 게임만들기 Tutorial
+- [모아보기Remaking Cavestory in C++ |  Limeoats](https://youtube.com/playlist?list=PLNOBk_id22bw6LXhrGfhVwqQIa-M2MsLa&si=ljzoW-9RzauwAaTJ)
+  - https://github.com/Limeoats/cavestory-development
+
+- [How To Make A Game In C++ & SDL2 From | Let's Make Games](https://youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx&si=KDT_0wqjitc2tqkS)
 
 # macOS설치
 - [Ep. 4 Setup/ SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=ZAfU_EoyvQn0h23c)
