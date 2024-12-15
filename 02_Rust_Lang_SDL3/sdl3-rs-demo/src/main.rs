@@ -6,8 +6,6 @@ use sdl3::pixels;
 
 use sdl3::gfx::primitives::DrawRenderer;
 
-mod primitives;
-
 const SCREEN_WIDTH: u32 = 800;
 const SCREEN_HEIGHT: u32 = 600;
 
