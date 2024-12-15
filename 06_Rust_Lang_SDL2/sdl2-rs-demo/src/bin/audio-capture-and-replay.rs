@@ -1,9 +1,14 @@
 extern crate sdl2;
 
-use sdl2::audio::{AudioCallback, AudioSpecDesired};
-use sdl2::AudioSubsystem;
-use std::sync::mpsc;
-use std::time::Duration;
+use sdl2::{
+    audio::{AudioCallback, AudioSpecDesired},
+    AudioSubsystem,
+};
+
+use std::{
+    sync::mpsc,
+    time::Duration,
+};
 
 const RECORDING_LENGTH_SECONDS: usize = 3;
 

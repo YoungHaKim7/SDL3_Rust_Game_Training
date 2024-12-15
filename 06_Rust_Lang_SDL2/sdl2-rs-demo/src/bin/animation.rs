@@ -1,11 +1,8 @@
 extern crate sdl2;
-use std::path::Path;
 
-use sdl2::event::Event;
-use sdl2::keyboard::Keycode;
-use sdl2::rect::Point;
-use sdl2::rect::Rect;
-use std::time::Duration;
+use sdl2::{event::Event, keyboard::Keycode, rect::Point, rect::Rect};
+
+use std::{path::Path, time::Duration};
 
 fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
