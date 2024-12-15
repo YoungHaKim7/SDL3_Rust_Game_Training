@@ -454,3 +454,30 @@ vscode:
 	echo '    "version": "2.0.0"' >> .vscode/tasks.json
 	
 ```
+
+# OpenCV vs OpenGC[|🔝|](#link)
+- https://ho-j.tistory.com/2
+- 주요 알고리즘(OpenCV)OpenCV(Open Source Computer Vision)는 오픈 소스 컴퓨터 비전 라이브러리이다. 실시간 이미지 프로세싱에 중점을 둔 라이브러리이다.
+ - 이진화(binarization)
+ - 노이즈 제거
+ - 외곽선 검출(edge detection)
+ - 패턴 인식
+ - 기계학습(machine learning)
+ - ROI(Region Of Interest) 설정
+ - 이미지 변환(image warping)
+ - 하드웨어 가속
+
+<hr />
+
+- 주요 알고리즘(OpenGV)
+- OpenGL(Open Graphics Library)은 3D Graphics 표현에 최적화된 표준화된 API 로, 3D Rendering에 중점을 둔 라이브러리이다.
+  - 지원 플랫폼 : OS에 비종속적
+  - 주요 알고리즘
+    - 숨은 면 제거
+    - 투명화
+    - 반 에일리어싱
+    - 텍스쳐 매핑
+    - 픽셀 조작
+    - 변형을 위한 모델링
+    - 대기 효괴(안개, 연기, 아지랑이 등)
+    (※ 반 에일리어싱: 그래픽 프로그램에서 화면의 영상을 자연스럽고 매끄럽게 표현하도록 해 주는 화면 처리 기법)
