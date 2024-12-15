@@ -11,3 +11,30 @@
 
 - https://crates.io/crates/sdl2/0.37.0
 - https://github.com/Rust-SDL2/rust-sdl2
+
+<hr />
+
+- cargo add sdl2 
+
+```
+$ cargo add sdl2 -F mixer
+    Updating crates.io index
+      Adding sdl2 v0.37.0 to dependencies
+             Features:
+             + mixer
+             - bundled
+             - c_vec
+             - gfx
+             - hidapi
+             - image
+             - raw-window-handle
+             - static-link
+             - ttf
+             - unsafe_textures
+             - use-bindgen
+             - use-pkgconfig
+             - use-vcpkg
+             - use_mac_framework
+    Updating crates.io index
+     Locking 7 packages to latest compatible versions
+```

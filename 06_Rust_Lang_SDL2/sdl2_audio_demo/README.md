@@ -18,5 +18,12 @@ $ cargo r --bin audio-squarewave
 
 AudioSpec { freq: 44100, format: F32LSB, channels: 1, silence: 0, samples: 2048, size: 8192 }
 
+# sine wav?? 아주 짧은 삐~  끝
+$ cargo r --bin audio-wav
+
+# 내가 생각하는 화이트 노이즈 맞다.
+$ cargo r --bin audio-whitenoise
+
+AudioSpec { freq: 44100, format: F32LSB, channels: 1, silence: 0, samples: 2048, size: 8192 }
 ```
 
