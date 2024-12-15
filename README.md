@@ -27,7 +27,7 @@
 
 <hr />
 
-- [OpenCV 와 Open GV의 차이점](https://ho-j.tistory.com/2)
+- [OpenCV 와 Open GV의 차이점](#opencv-vs-opengc)
 
 <hr />
 
