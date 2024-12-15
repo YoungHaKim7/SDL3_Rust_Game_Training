@@ -137,6 +137,12 @@ sudo make install
 # macOS(SDL2, SDL3 설치)[|🔝|](#link)
 - [[Ep. 4] [Setup] SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=eWPOTULjG4p9pSmH)
 
+```bash
+brew install sdl2_gfx sdl2 sdl2_image sdl2_mixer
+
+# Small sample cross-platform networking library
+brew install sdl2_net
+```
 
 # macOS PATH(fishshell)[|🔝|](#link)
 
