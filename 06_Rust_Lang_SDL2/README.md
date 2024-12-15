@@ -16,7 +16,7 @@
 
 - cargo add sdl2 
 
-```
+```bash
 $ cargo add sdl2 -F mixer
     Updating crates.io index
       Adding sdl2 v0.37.0 to dependencies
