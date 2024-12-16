@@ -2,11 +2,15 @@ use std::time::Duration;
 
 use sdl2::{event::Event, keyboard::Keycode, pixels::Color};
 
+use sdl2::image::{self, InitFlag, LoadTexture};
+
 extern crate sdl2;
 
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
+    let _image_context = image::init(InitFlag::PNG | InitFlag::JPG)?;
+
     let window = video_subsystem
         .window("rust-sdl2 demo: Video", 800, 600)
         .position_centered()
@@ -15,10 +19,9 @@ pub fn main() -> Result<(), String> {
         .map_err(|e| e.to_string())?;
 
     let mut canvas = window.into_canvas().build().map_err(|e| e.to_string())?;
+    let texture_creator = canvas.texture_creator();
+    let texture = texture_creator.load_texture("../")?;
 
-    canvas.set_draw_color(Color::RGB(0, 0, 0));
-    canvas.clear();
-    canvas.present();
     let mut event_pump = sdl_context.event_pump()?;
 
     'running: loop {
@@ -32,7 +35,9 @@ pub fn main() -> Result<(), String> {
                 _ => {}
             }
         }
+
         canvas.clear();
+        canvas.copy(&texture, None, None)?;
         canvas.present();
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 30));
     }
