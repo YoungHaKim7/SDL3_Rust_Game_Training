@@ -75,7 +75,7 @@ use sdl2::{event::Event, keyboard::Keycode, video::GLProfile};
 use std::time::Duration;
 
 fn main() -> Result<(), String> {
-    let sdl = sdl2::init().expect("Failed to initialize SDL video subsystem");
+    let sdl = sdl2::init().expect("SDL2 initialization failed.");
     let video_subsystem = sdl
         .video()
         .expect("Failed to initialize SDL video subsystem");
