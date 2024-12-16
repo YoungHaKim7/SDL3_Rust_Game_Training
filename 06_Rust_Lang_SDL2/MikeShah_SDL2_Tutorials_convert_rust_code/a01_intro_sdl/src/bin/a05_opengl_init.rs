@@ -75,8 +75,10 @@ use sdl2::{event::Event, keyboard::Keycode, video::GLProfile};
 use std::time::Duration;
 
 fn main() -> Result<(), String> {
-    let sdl = sdl2::init().unwrap();
-    let video_subsystem = sdl.video().unwrap();
+    let sdl = sdl2::init().expect("Failed to initialize SDL video subsystem");
+    let video_subsystem = sdl
+        .video()
+        .expect("Failed to initialize SDL video subsystem");
 
     // OpenGL 설정
     let gl_attr = video_subsystem.gl_attr();
