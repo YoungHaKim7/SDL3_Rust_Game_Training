@@ -53,7 +53,7 @@ use sdl2::{event::Event, keyboard::Keycode};
 pub fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
-    let _image_context = image::init(InitFlag::PNG | InitFlag::JPG)?;
+    let image_context = image::init(InitFlag::PNG | InitFlag::JPG)?;
 
     let window = video_subsystem
         .window("rust-sdl2 demo: Video", 800, 600)
@@ -66,7 +66,7 @@ pub fn main() -> Result<(), String> {
     let texture_creator = canvas.texture_creator();
 
     // Use an absolute or dynamically computed path for the image file
-    let image_path = Path::new("../assets/3D-Window_BBB_Blender_2.jpg");
+    let image_path = Path::new("../assets/3D_Window_BBB_Blender_2.jpg");
     if !image_path.exists() {
         return Err(format!(
             "Image file not found: {}",
