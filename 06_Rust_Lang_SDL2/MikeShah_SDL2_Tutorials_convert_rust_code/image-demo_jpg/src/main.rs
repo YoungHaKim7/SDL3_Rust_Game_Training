@@ -53,9 +53,9 @@ fn run(png: &Path) -> Result<(), String> {
         //         }
         //     }
 
-        canvas.clear();
-        canvas.present();
-        ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 30));
+        // canvas.clear();
+        // canvas.present();
+        // ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 30));
     }
     Ok(())
 }
