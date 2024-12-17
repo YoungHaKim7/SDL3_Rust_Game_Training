@@ -1,6 +1,6 @@
 use sdl2::pixels::Color;
 use sdl2::pixels::PixelFormatEnum;
-use sdl2::rect::{Point, Rect};
+use sdl2::rect::Rect;
 
 use std::time::Duration;
 

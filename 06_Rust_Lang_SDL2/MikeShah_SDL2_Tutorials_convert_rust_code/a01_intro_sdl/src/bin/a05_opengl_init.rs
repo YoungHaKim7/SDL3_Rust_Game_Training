@@ -7,8 +7,8 @@
 // use std::time::Duration;
 
 // fn main() -> Result<(), String> {
-//     let sdl = sdl2::init().unwrap();
-//     let video_subsystem = sdl.video().unwrap();
+//     let sdl = sdl2::init().expect("SDL2 failed");
+//     let video_subsystem = sdl.video().expect("video _sub system error");
 
 //     // OpenGL 설정
 //     let gl_attr = video_subsystem.gl_attr();
@@ -115,7 +115,7 @@ fn main() -> Result<(), String> {
 
         unsafe {
             gl::Viewport(0, 0, 640, 480);
-            gl::ClearColor(1.0, 0.0, 0.0, 1.0);
+            gl::ClearColor(0.0, 1.0, 0.0, 1.0);
             gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
         }
 
