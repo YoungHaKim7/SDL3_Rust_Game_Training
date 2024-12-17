@@ -74,6 +74,7 @@ pub fn main() -> Result<(), String> {
         ));
     }
 
+    // let texture = texture_creator.load_texture(image_path)?;
     let texture = texture_creator.load_texture(image_path)?;
     canvas.copy(&texture, None, None)?;
     canvas.present();
