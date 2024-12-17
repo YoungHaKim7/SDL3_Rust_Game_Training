@@ -1,3 +1,7 @@
+# MikeShah(C++개발자 배울게 많다.) 
+- https://github.com/MikeShah/SDL2_Tutorials
+
+
 # 다수 파일(openGL 연결)
 
 ```justfile
