@@ -75,11 +75,11 @@ pub fn main() -> Result<(), String> {
     }
 
     let texture = texture_creator.load_texture(image_path)?;
-
-    let mut event_pump = sdl_context.event_pump()?;
+    canvas.copy(&texture, None, None)?;
+    canvas.present();
 
     'running: loop {
-        for event in event_pump.poll_iter() {
+        for event in sdl_context.event_pump()?.poll_iter() {
             match event {
                 Event::Quit { .. }
                 | Event::KeyDown {
@@ -90,10 +90,10 @@ pub fn main() -> Result<(), String> {
             }
         }
 
-        canvas.clear();
-        canvas.copy(&texture, None, None)?;
-        canvas.present();
-        ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 30));
+        // canvas.clear();
+        // canvas.copy(&texture, None, None)?;
+        // canvas.present();
+        // ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 30));
     }
 
     Ok(())
