@@ -3,6 +3,7 @@
 - [SDL3코어엔진은 C언어로 만듬Simple Directmedia Layer](#c언어로-만듬simple-directmedia-layer) 
   - [SDL3 & SDL2 공식문서](#documentation)
 	  - [SDL Tutorial(SDL3, SDL2)](#tutorial)
+- [쉐이더 기술 이해_Shader compiler and tools for SDLSL (Simple Directmedia Layer Shader Language)]()
 - [SDL3최신 release다운받기](#최신-release)
   - [SDL3 & SDL2 Install_ git clone으로cmake함](#install)
 	  - macOS
@@ -88,6 +89,12 @@ version = "0.1.3+SDL3-preview-3.1.6"
 - [SDL3 wiki 문서_https://wiki.libsdl.org/SDL3/FrontPage](https://wiki.libsdl.org/SDL3/FrontPage)
   - [구하기힘든 GPU예시_Example collection for the SDL_GPU API](https://github.com/TheSpydog/SDL_gpu_examples) 
 - [SDL2 wiki 문서_https://wiki.libsdl.org/SDL2/FrontPage](https://wiki.libsdl.org/SDL2/FrontPage)
+
+# 쉐이더 기술 이해_Shader compiler and tools for SDLSL (Simple Directmedia Layer Shader Language)[|🔝|](#link)
+
+- [Shader compiler and tools for SDLSL (Simple Directmedia Layer Shader Language](https://github.com/libsdl-org/SDL_shader_tools)
+  - [README-shader-language-quickstart.md](https://github.com/libsdl-org/SDL_shader_tools/blob/main/docs/README-shader-language-quickstart.md)
+  - [SDL GPU SUPPORT: THE BASIC IDEA](https://github.com/libsdl-org/SDL_shader_tools/blob/main/docs/README-SDL_gpu.md)
 
 # 최신 Release[|🔝|](#link)
 - [https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6)
