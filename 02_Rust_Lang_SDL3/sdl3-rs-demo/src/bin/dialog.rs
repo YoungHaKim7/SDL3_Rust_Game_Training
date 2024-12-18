@@ -42,7 +42,9 @@ pub fn main() -> Result<(), String> {
 
     let default_path_path = PathBuf::from("/");
 
-    'running: loop {
+    let mut running = true;
+
+    while running {
         for event in event_pump.poll_iter() {
             match event {
                 Event::Quit { .. }
@@ -50,7 +52,7 @@ pub fn main() -> Result<(), String> {
                     keycode: Some(Keycode::Escape),
                     ..
                 } => {
-                    break 'running;
+                    running = false;
                 }
                 Event::KeyDown {
                     keycode: Some(Keycode::O),
