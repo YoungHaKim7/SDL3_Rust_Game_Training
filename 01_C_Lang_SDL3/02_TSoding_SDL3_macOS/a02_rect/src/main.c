@@ -18,16 +18,16 @@ int main(void) {
             if (event.type == SDL_EVENT_QUIT) quit = true;
         }
 
-        SDL_SetRenderDrawColor(renderer, 0x18, 0x18, 0x18, 0xFF);
-        SDL_RenderClear(renderer);
+        // SDL_SetRenderDrawColor(renderer, 0xff, 0x0, 0x0, 0xFF);
+        // SDL_RenderClear(renderer);
 
         SDL_FRect rect = {
-            .w = 100,
-            .h = 100,
+            .w = 300,
+            .h = 250,
         };
         rect.x = (WIDTH - rect.w)/2.0f,
         rect.y = (HEIGHT - rect.h)/2.0f,
-        SDL_SetRenderDrawColor(renderer, 0x18, 0x18, 0x18, 0xFF);
+        SDL_SetRenderDrawColor(renderer, 0xff, 0x0, 0x0, 0xFF);
         SDL_RenderFillRect(renderer,&rect);
 
         SDL_RenderPresent(renderer);
