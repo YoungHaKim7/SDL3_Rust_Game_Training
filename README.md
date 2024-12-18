@@ -15,7 +15,7 @@
 - justfile setting
   - [C언어 justfile](#c-justfile)
 
-- [SDL3/ SDL2 잘 연결 되었는지 확인(xbps-query)]()
+- [SDL3/ SDL2 잘 연결 되었는지 확인(xbps-query)](#sdl3-sdl2-잘-연결-되었는지-확인xbps-query)
 
 - [오류난거 참고 해서 힌트를 찾자_실패는 성공의 어머니](#오류난거-참고)
 
