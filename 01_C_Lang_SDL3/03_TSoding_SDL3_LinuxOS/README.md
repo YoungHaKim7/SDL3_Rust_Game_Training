@@ -1,8 +1,24 @@
-# justfile
+#  241208진정한개발자!!_Is SDL3 Ready For Production? | Tsoding Daily 
 
+- [241208진정한개발자!!_Is SDL3 Ready For Production? | Tsoding Daily](https://youtu.be/PuE98lipGU8?si=_HmaD0hT9UK-g5bA)
+
+# format specifies type 'char *' but the argument has type 'char' [-Wformat]
+- https://stackoverflow.com/questions/40566317/format-specifies-type-char-but-the-argument-has-type-char-wformat
+
+```bash
+a03 해결하기
+clang -lSDL3 -MMD -MP -Wall -O2 -o ./target/main ./src/main.c
+./src/main.c:16:69: warning: format specifies type 'char *' but the argument has type 'const char *(*)(void)' [-Wformat]
+   16 |         fprintf(stderr, "ERROR: Could not create GPU device: %s\n", SDL_GetError);
+      |                                                              ~~     ^~~~~~~~~~~~
+1 warning generate
+	
+```
+
+
+# LinuxOS(justfile 파일)
 
 ```justfile
-
 # which clang
 clang_which := `which clang`
 
@@ -24,6 +40,8 @@ ldflags_fsanitize_object := "-g -fsanitize=address"
 ldflags_fsanitize_valgrind := "-fsanitize=address -g3"
 # SDL3 세팅 최적화 O2
 ldflags_optimize :=  "-lSDL3 -MMD -MP -Wall -O2"
+# SDL3 macOS rpath 본인이 컴파일해준 build폴더
+# sdl3_rpath := "-rpath /usr/local/lib"
 # SDL 2 세팅
 # ldflags_optimize :=  "-lSDL2 -MMD -MP -Wall -O2"
 
