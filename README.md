@@ -166,6 +166,11 @@ brew install sdl2_net
 
 # 오류난거 참고[|🔝|](#link)
 
+- If you see a code example, try typing it in! It’s OK if you
+type in something wrong, or get errors; that’s the best way to learn! In computing,
+errors are not failures—they are simply experience.
+  - 출처 : Dive into System
+
 - 오류 난거 참고 하자
 ```bash
 --   SDL_XINPUT                  (Wanted: OFF): OFF
