@@ -97,6 +97,8 @@ version = "0.1.3+SDL3-preview-3.1.6"
     - [쉐이더 문법을 코드랑 잘 설명한 UE3에서 일부 가져왔다가고 함.Vertex Shader Syntax Megathread](https://github.com/libsdl-org/SDL_shader_tools/issues/3)
   - [SDL GPU SUPPORT: THE BASIC IDEA](https://github.com/libsdl-org/SDL_shader_tools/blob/main/docs/README-SDL_gpu.md)
 
+- [Shader translation library for SDL's GPU API._https://github.com/libsdl-org/SDL_shadercross](https://github.com/libsdl-org/SDL_shadercross)
+
 # 최신 Release[|🔝|](#link)
 - [https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6)
 
