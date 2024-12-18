@@ -86,6 +86,7 @@ version = "0.1.3+SDL3-preview-3.1.6"
 - [SDL3-sys lower-level bindings documentation](https://docs.rs/sdl3-sys/latest/sdl3_sys/)
 
 - [SDL3 wiki 문서_https://wiki.libsdl.org/SDL3/FrontPage](https://wiki.libsdl.org/SDL3/FrontPage)
+  - [구하기힘든 GPU예시_Example collection for the SDL_GPU API](https://github.com/TheSpydog/SDL_gpu_examples) 
 - [SDL2 wiki 문서_https://wiki.libsdl.org/SDL2/FrontPage](https://wiki.libsdl.org/SDL2/FrontPage)
 
 # 최신 Release[|🔝|](#link)
