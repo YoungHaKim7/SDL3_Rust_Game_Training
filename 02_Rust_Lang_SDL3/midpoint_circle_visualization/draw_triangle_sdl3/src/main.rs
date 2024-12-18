@@ -81,6 +81,7 @@ pub fn main() -> Result<(), String> {
 
     let window = video_subsystem
         .window("rust-sdl3 demo: draw Triangle", WINDOW_WIDTH, WINDOW_HEIGHT)
+        .resizable()
         .position_centered()
         .build()
         .map_err(|e| e.to_string())?;
