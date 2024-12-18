@@ -15,6 +15,8 @@
 - justfile setting
   - [C언어 justfile](#c-justfile)
 
+- [SDL3/ SDL2 잘 연결 되었는지 확인(xbps-query)]()
+
 - [오류난거 참고 해서 힌트를 찾자_실패는 성공의 어머니](#오류난거-참고)
 
 <hr />
@@ -482,3 +484,26 @@ vscode:
     - 변형을 위한 모델링
     - 대기 효괴(안개, 연기, 아지랑이 등)
     (※ 반 에일리어싱: 그래픽 프로그램에서 화면의 영상을 자연스럽고 매끄럽게 표현하도록 해 주는 화면 처리 기법)
+
+
+# SDL3/ SDL2 잘 연결 되었는지 확인(xbps-query)[|🔝|](#link)
+- C언어로 만든거 리눅스 전용인듯
+- https://github.com/void-linux/xbps
+  - [241208진정한개발자!!_Is SDL3 Ready For Production? | Tsoding Daily](https://youtu.be/PuE98lipGU8?si=_HmaD0hT9UK-g5bA)
+
+```
+xbps-query -Rs sdl2
+
+xbps-query -f SDL2
+```
+
+```
+# ldd 로 연결 확인 가능함(dependency확인)
+ldd /usr/lib/libSDL2-2.0.so.0.3000.7
+```
+
+- `find`로 파일 찾기
+```bash
+find /usr/ -type f -iname \*sdl\*
+```
+
