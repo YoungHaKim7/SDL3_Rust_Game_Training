@@ -52,6 +52,7 @@ pub fn main() -> Result<(), String> {
                     keycode: Some(Keycode::Escape),
                     ..
                 } => {
+                    // break loop~
                     running = true;
                 }
                 Event::KeyDown {
