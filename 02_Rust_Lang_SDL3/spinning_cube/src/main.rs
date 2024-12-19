@@ -47,7 +47,13 @@ impl Vertex {
         }
     }
 
-    fn project(&self, width: u32, height: u32, fov: f32, viewer_distance: f32) -> (i32, i32) {
+    #[rustfmt::skip]
+    fn project(
+        &self, width: u32,
+        height: u32,
+        fov: f32,
+        viewer_distance: f32
+    ) -> (i32, i32) {
         let factor = fov / (viewer_distance + self.z);
         let x = self.x * factor * width as f32 / 2.0 + width as f32 / 2.0;
         let y = -self.y * factor * height as f32 / 2.0 + height as f32 / 2.0;
@@ -55,7 +61,13 @@ impl Vertex {
     }
 }
 
-fn draw_line(canvas: &mut Canvas<Window>, p1: (i32, i32), p2: (i32, i32), color: Color) {
+#[rustfmt::skip]
+fn draw_line(
+    canvas: &mut Canvas<Window>,
+    p1: (i32, i32),
+    p2: (i32, i32),
+    color: Color
+) {
     canvas.set_draw_color(color);
     canvas
         .draw_line(Point::new(p1.0, p1.1), Point::new(p2.0, p2.1))
@@ -75,46 +87,39 @@ fn main() -> Result<(), String> {
     let mut canvas = window.into_canvas();
     let mut event_pump = sdl_context.event_pump()?;
 
+    #[rustfmt::skip]
     let vertices = [
+        // Vertex 0
         Vertex {
-            x: -CUBE_SIZE,
-            y: -CUBE_SIZE,
-            z: -CUBE_SIZE,
+            x: -CUBE_SIZE, y: -CUBE_SIZE, z: -CUBE_SIZE,
         },
+        // Vertex 1
         Vertex {
-            x: CUBE_SIZE,
-            y: -CUBE_SIZE,
-            z: -CUBE_SIZE,
+            x: CUBE_SIZE, y: -CUBE_SIZE, z: -CUBE_SIZE,
         },
+        // Vertex 2
         Vertex {
-            x: CUBE_SIZE,
-            y: CUBE_SIZE,
-            z: -CUBE_SIZE,
+            x: CUBE_SIZE, y: CUBE_SIZE, z: -CUBE_SIZE,
         },
+        // Vertex 3
         Vertex {
-            x: -CUBE_SIZE,
-            y: CUBE_SIZE,
-            z: -CUBE_SIZE,
+            x: -CUBE_SIZE, y: CUBE_SIZE, z: -CUBE_SIZE,
         },
+        // Vertex 4
         Vertex {
-            x: -CUBE_SIZE,
-            y: -CUBE_SIZE,
-            z: CUBE_SIZE,
+            x: -CUBE_SIZE, y: -CUBE_SIZE, z: CUBE_SIZE,
         },
+        // Vertex 5
         Vertex {
-            x: CUBE_SIZE,
-            y: -CUBE_SIZE,
-            z: CUBE_SIZE,
+            x: CUBE_SIZE, y: -CUBE_SIZE, z: CUBE_SIZE,
         },
+        // Vertex 6
         Vertex {
-            x: CUBE_SIZE,
-            y: CUBE_SIZE,
-            z: CUBE_SIZE,
+            x: CUBE_SIZE, y: CUBE_SIZE, z: CUBE_SIZE,
         },
+        // Vertex 7
         Vertex {
-            x: -CUBE_SIZE,
-            y: CUBE_SIZE,
-            z: CUBE_SIZE,
+            x: -CUBE_SIZE, y: CUBE_SIZE, z: CUBE_SIZE,
         },
     ];
 
