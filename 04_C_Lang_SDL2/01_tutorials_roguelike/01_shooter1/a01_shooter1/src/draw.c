@@ -1,5 +1,5 @@
 #include <SDL2/SDL.h>
-#include "structs.h"
+#include "headers/structs.h"
 
 extern App app;
 

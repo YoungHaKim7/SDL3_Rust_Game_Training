@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-#include "init.h"
-#include "defs.h"
+#include "headers/init.h"
+#include "headers/defs.h"
 
 extern App app;
 

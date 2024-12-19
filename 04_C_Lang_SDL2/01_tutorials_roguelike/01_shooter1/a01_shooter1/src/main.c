@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <SDL2/SDL.h>
-#include "structs.h"
-#include "init.h"
-#include "draw.h"
-#include "input.h"
+#include "headers/structs.h"
+#include "headers/init.h"
+#include "headers/draw.h"
+#include "headers/input.h"
 
 App app;
 
