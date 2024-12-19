@@ -1,4 +1,7 @@
-// // https://en.wikipedia.org/wiki/Rotation_matrix
+// https://en.wikipedia.org/wiki/Rotation_matrix
+// fork demos https://www.desmos.com/calculator/lhsycydnsk
+// orginal code https://www.desmos.com/calculator/vp7yjxkq9h
+
 extern crate sdl3;
 
 use sdl3::{
@@ -8,9 +11,12 @@ use std::time::Duration;
 
 const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
-const CUBE_SIZE: f32 = 100.0;
+
+const CUBE_SIZE: f32 = 1.0;
+const VIEWER_DISTANCE: f32 = 5.0;
 
 #[derive(Clone, Copy)]
+
 struct Vertex {
     x: f32,
     y: f32,
@@ -18,34 +24,34 @@ struct Vertex {
 }
 
 impl Vertex {
-    fn rotate_x(&self, angle: f32) -> Vertex {
-        Vertex {
-            x: self.x,
-            y: self.y * angle.cos() - self.z * angle.sin(),
-            z: self.y * angle.sin() + self.z * angle.cos(),
-        }
-    }
+    fn rotate(&self, angle_x: f32, angle_y: f32, angle_z: f32) -> Vertex {
+        let (sin_x, cos_x) = angle_x.sin_cos();
+        let (sin_y, cos_y) = angle_y.sin_cos();
+        let (sin_z, cos_z) = angle_z.sin_cos();
 
-    fn rotate_y(&self, angle: f32) -> Vertex {
-        Vertex {
-            x: self.x * angle.cos() + self.z * angle.sin(),
-            y: self.y,
-            z: -self.x * angle.sin() + self.z * angle.cos(),
-        }
-    }
+        // Rotation around X axis
+        let y1 = self.y * cos_x - self.z * sin_x;
+        let z1 = self.y * sin_x + self.z * cos_x;
 
-    fn rotate_z(&self, angle: f32) -> Vertex {
+        // Rotation around Y axis
+        let x2 = self.x * cos_y + z1 * sin_y;
+        let z2 = -self.x * sin_y + z1 * cos_y;
+
+        // Rotation around Z axis
+        let x3 = x2 * cos_z - y1 * sin_z;
+        let y3 = x2 * sin_z + y1 * cos_z;
+
         Vertex {
-            x: self.x * angle.cos() - self.y * angle.sin(),
-            y: self.x * angle.sin() + self.y * angle.cos(),
-            z: self.z,
+            x: x3,
+            y: y3,
+            z: z2,
         }
     }
 
     fn project(&self, width: u32, height: u32, fov: f32, viewer_distance: f32) -> (i32, i32) {
         let factor = fov / (viewer_distance + self.z);
-        let x = self.x * factor + width as f32 / 2.0;
-        let y = -self.y * factor + height as f32 / 2.0;
+        let x = self.x * factor * width as f32 / 2.0 + width as f32 / 2.0;
+        let y = -self.y * factor * height as f32 / 2.0 + height as f32 / 2.0;
         (x as i32, y as i32)
     }
 }
@@ -113,19 +119,11 @@ fn main() -> Result<(), String> {
         },
     ];
 
+    #[rustfmt::skip]
     let edges = [
-        (0, 1),
-        (1, 2),
-        (2, 3),
-        (3, 0),
-        (4, 5),
-        (5, 6),
-        (6, 7),
-        (7, 4),
-        (0, 4),
-        (1, 5),
-        (2, 6),
-        (3, 7),
+        (0, 1), (1, 2), (2, 3), (3, 0),
+        (4, 5), (5, 6), (6, 7), (7, 4),
+        (0, 4), (1, 5), (2, 6), (3, 7),
     ];
 
     let mut angle_x = 0.0;
@@ -151,19 +149,29 @@ fn main() -> Result<(), String> {
 
         let transformed_vertices: Vec<Vertex> = vertices
             .iter()
-            .map(|&v| v.rotate_x(angle_x).rotate_y(angle_y).rotate_z(angle_z))
+            .map(|&v| v.rotate(angle_x, angle_y, angle_z))
             .collect();
 
         for &(start, end) in &edges {
-            let p1 = transformed_vertices[start].project(WINDOW_WIDTH, WINDOW_HEIGHT, 256.0, 4.0);
-            let p2 = transformed_vertices[end].project(WINDOW_WIDTH, WINDOW_HEIGHT, 256.0, 4.0);
+            let p1 = transformed_vertices[start].project(
+                WINDOW_WIDTH,
+                WINDOW_HEIGHT,
+                1.0,
+                VIEWER_DISTANCE,
+            );
+            let p2 = transformed_vertices[end].project(
+                WINDOW_WIDTH,
+                WINDOW_HEIGHT,
+                1.0,
+                VIEWER_DISTANCE,
+            );
             draw_line(&mut canvas, p1, p2, Color::RGB(255, 255, 255));
         }
 
         canvas.present();
 
-        angle_x += 0.01;
-        angle_y += 0.01;
+        angle_x += 0.02;
+        angle_y += 0.03;
         angle_z += 0.01;
 
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
