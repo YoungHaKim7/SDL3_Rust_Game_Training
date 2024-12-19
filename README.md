@@ -35,6 +35,10 @@
 
 <hr />
 
+-[SDL2 game tutorial]()
+
+<hr />
+
 # SDL3_Rust_Game_Training[|🔝|](#link)
 
 - SDL3-rs[![crates.io](https://img.shields.io/crates/v/sdl3.svg)](https://crates.io/crates/sdl3)![Crates.io](https://img.shields.io/crates/l/sdl3)![Downloads](https://img.shields.io/crates/d/sdl3.svg)<a href="https://github.com/libsdl-org/SDL"><img alt="githubicon" width="20px" src="https://user-images.githubusercontent.com/67513038/218287708-001511d7-1cce-42d3-92d2-4a61193b38f0.png" /></a>
@@ -523,3 +527,6 @@ ldd /usr/lib/libSDL2-2.0.so.0.3000.7
 find /usr/ -type f -iname \*sdl\*
 ```
 
+
+# SDL2 game tutorial[|🔝|](#link)
+- https://www.parallelrealities.co.uk/tutorials/#rogue
