@@ -58,11 +58,11 @@ r:
 
 # (C)clang compile(Optimization)
 ro:
-	rm -rf target
-	mkdir -p target
+	rm -rf {{target_dir}}
+	mkdir -p {{target_dir}}
 	clang {{ldflags_optimize}} {{link_files02}} {{source}}
 	mv *.d *.out target
-	./target/./a.out
+	{{target_dir}}/./a.out
 
 # zig C compile
 zr:
