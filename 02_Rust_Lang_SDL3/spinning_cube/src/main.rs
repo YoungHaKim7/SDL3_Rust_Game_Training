@@ -1,72 +1,172 @@
-extern crate sdl2;
+// https://en.wikipedia.org/wiki/Rotation_matrix
+extern crate sdl3;
 
-extern crate gl;
-
-use sdl2::{
-    event::Event,
-    keyboard::Keycode,
-    video::{GLProfile, Window},
+use sdl3::{
+    event::Event, keyboard::Keycode, pixels::Color, rect::Point, render::Canvas, video::Window,
 };
+use std::time::Duration;
 
-use std::{
-    ffi::CString,
-    ptr,
-};
+const WINDOW_WIDTH: u32 = 800;
+const WINDOW_HEIGHT: u32 = 600;
+const CUBE_SIZE: f32 = 100.0;
 
-fn main() {
-    let sdl = sdl2::init().unwrap();
-    let video_subsystem = sdl.video().unwrap();
+#[derive(Clone, Copy)]
+struct Vertex {
+    x: f32,
+    y: f32,
+    z: f32,
+}
 
-    // OpenGL 설정
-    let gl_attr = video_subsystem.gl_attr();
-    gl_attr.set_context_profile(GLProfile::Core);
-    gl_attr.set_context_version(4, 1);
-    gl_attr.set_double_buffer(true);
-    gl_attr.set_depth_size(24);
+impl Vertex {
+    fn rotate_x(&self, angle: f32) -> Vertex {
+        Vertex {
+            x: self.x,
+            y: self.y * angle.cos() - self.z * angle.sin(),
+            z: self.y * angle.sin() + self.z * angle.cos(),
+        }
+    }
 
-    // 윈도우 생성
+    fn rotate_y(&self, angle: f32) -> Vertex {
+        Vertex {
+            x: self.x * angle.cos() + self.z * angle.sin(),
+            y: self.y,
+            z: -self.x * angle.sin() + self.z * angle.cos(),
+        }
+    }
+
+    fn rotate_z(&self, angle: f32) -> Vertex {
+        Vertex {
+            x: self.x * angle.cos() - self.y * angle.sin(),
+            y: self.x * angle.sin() + self.y * angle.cos(),
+            z: self.z,
+        }
+    }
+
+    fn project(&self, width: u32, height: u32, fov: f32, viewer_distance: f32) -> (i32, i32) {
+        let factor = fov / (viewer_distance + self.z);
+        let x = self.x * factor + width as f32 / 2.0;
+        let y = -self.y * factor + height as f32 / 2.0;
+        (x as i32, y as i32)
+    }
+}
+
+fn draw_line(canvas: &mut Canvas<Window>, p1: (i32, i32), p2: (i32, i32), color: Color) {
+    canvas.set_draw_color(color);
+    canvas
+        .draw_line(Point::new(p1.0, p1.1), Point::new(p2.0, p2.1))
+        .unwrap();
+}
+
+fn main() -> Result<(), String> {
+    let sdl_context = sdl3::init()?;
+    let video_subsystem = sdl_context.video()?;
+
     let window = video_subsystem
-        .window("Rust SDL2 Window", 640, 480)
-        .opengl()
+        .window("SDL3 Rotating Cube", WINDOW_WIDTH, WINDOW_HEIGHT)
         .position_centered()
         .build()
-        .unwrap();
+        .map_err(|e| e.to_string())?;
+    let mut canvas = window.into_canvas().build().map_err(|e| e.to_string())?;
+    let mut event_pump = sdl_context.event_pump()?;
 
-    let _gl_context = window.gl_create_context().unwrap();
-    gl::load_with(|s| video_subsystem.gl_get_proc_address(s) as *const _);
+    let vertices = [
+        Vertex {
+            x: -CUBE_SIZE,
+            y: -CUBE_SIZE,
+            z: -CUBE_SIZE,
+        },
+        Vertex {
+            x: CUBE_SIZE,
+            y: -CUBE_SIZE,
+            z: -CUBE_SIZE,
+        },
+        Vertex {
+            x: CUBE_SIZE,
+            y: CUBE_SIZE,
+            z: -CUBE_SIZE,
+        },
+        Vertex {
+            x: -CUBE_SIZE,
+            y: CUBE_SIZE,
+            z: -CUBE_SIZE,
+        },
+        Vertex {
+            x: -CUBE_SIZE,
+            y: -CUBE_SIZE,
+            z: CUBE_SIZE,
+        },
+        Vertex {
+            x: CUBE_SIZE,
+            y: -CUBE_SIZE,
+            z: CUBE_SIZE,
+        },
+        Vertex {
+            x: CUBE_SIZE,
+            y: CUBE_SIZE,
+            z: CUBE_SIZE,
+        },
+        Vertex {
+            x: -CUBE_SIZE,
+            y: CUBE_SIZE,
+            z: CUBE_SIZE,
+        },
+    ];
 
-    // 이벤트 루프
-    let mut event_pump = sdl.event_pump().unwrap();
-    let mut running = true;
+    let edges = [
+        (0, 1),
+        (1, 2),
+        (2, 3),
+        (3, 0),
+        (4, 5),
+        (5, 6),
+        (6, 7),
+        (7, 4),
+        (0, 4),
+        (1, 5),
+        (2, 6),
+        (3, 7),
+    ];
 
-    while running {
+    let mut angle_x = 0.0;
+    let mut angle_y = 0.0;
+    let mut angle_z = 0.0;
+
+    'running: loop {
         for event in event_pump.poll_iter() {
             match event {
-                Event::Quit { .. } => running = false,
-                Event::MouseMotion { .. } => println!("mouse has been moved"),
-                Event::KeyDown {
-                    keycode: Some(Keycode::Num0),
+                Event::Quit { .. }
+                | Event::KeyDown {
+                    keycode: Some(Keycode::Escape),
                     ..
-                } => println!("0 was pressed"),
-                Event::KeyDown { .. } => println!("a key has been pressed"),
+                } => {
+                    break 'running;
+                }
                 _ => {}
             }
         }
 
-        let keyboard_state = event_pump.keyboard_state();
-        if keyboard_state.is_scancode_pressed(sdl2::keyboard::Scancode::Right) {
-            println!("right arrow key is pressed");
+        canvas.set_draw_color(Color::RGB(0, 0, 0));
+        canvas.clear();
+
+        let transformed_vertices: Vec<Vertex> = vertices
+            .iter()
+            .map(|&v| v.rotate_x(angle_x).rotate_y(angle_y).rotate_z(angle_z))
+            .collect();
+
+        for &(start, end) in &edges {
+            let p1 = transformed_vertices[start].project(WINDOW_WIDTH, WINDOW_HEIGHT, 256.0, 4.0);
+            let p2 = transformed_vertices[end].project(WINDOW_WIDTH, WINDOW_HEIGHT, 256.0, 4.0);
+            draw_line(&mut canvas, p1, p2, Color::RGB(255, 255, 255));
         }
 
-        unsafe {
-            gl::Viewport(0, 0, 640, 480);
-            gl::ClearColor(1.0, 0.0, 0.0, 1.0);
-            gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
-        }
+        canvas.present();
 
-        window.gl_swap_window();
+        angle_x += 0.01;
+        angle_y += 0.01;
+        angle_z += 0.01;
+
+        ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }
 
-    // SDL 종료
-    sdl.delay(3000);
+    Ok(())
 }
