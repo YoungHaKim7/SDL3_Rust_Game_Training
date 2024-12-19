@@ -35,7 +35,9 @@
 
 <hr />
 
--[SDL2 game tutorial](#sdl2-game-tutorial)
+- Game게임 만들면서 SDL3/2 감 잡기
+  - C언어
+    - [SDL2 game tutorial(C언어)](#sdl2-game-tutorial)
 
 <hr />
 
@@ -529,4 +531,5 @@ find /usr/ -type f -iname \*sdl\*
 
 
 # SDL2 game tutorial[|🔝|](#link)
+- https://discourse.libsdl.org/t/sdl2-game-tutorials/25356
 - https://www.parallelrealities.co.uk/tutorials/#rogue
