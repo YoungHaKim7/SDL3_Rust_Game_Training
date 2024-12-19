@@ -35,7 +35,7 @@
 
 <hr />
 
--[SDL2 game tutorial]()
+-[SDL2 game tutorial](#sdl2-game-tutorial)
 
 <hr />
 
