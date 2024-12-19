@@ -1,4 +1,4 @@
-// https://en.wikipedia.org/wiki/Rotation_matrix
+// // https://en.wikipedia.org/wiki/Rotation_matrix
 extern crate sdl3;
 
 use sdl3::{
@@ -66,7 +66,8 @@ fn main() -> Result<(), String> {
         .position_centered()
         .build()
         .map_err(|e| e.to_string())?;
-    let mut canvas = window.into_canvas().build().map_err(|e| e.to_string())?;
+
+    let mut canvas = window.into_canvas();
     let mut event_pump = sdl_context.event_pump()?;
 
     let vertices = [
