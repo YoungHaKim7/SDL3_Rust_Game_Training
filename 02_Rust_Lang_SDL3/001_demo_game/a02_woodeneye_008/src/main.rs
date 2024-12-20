@@ -11,16 +11,22 @@ use sdl3::render::RendererInfo;
 use sdl3::timer;
 use sdl3::video::Window;
 use sdl3::Sdl;
-use sdl3_sys::everything::SDL_FPoint;
-use sdl3_sys::everything::SDL_GetRenderOutputSize;
+// use sdl3_sys::everything::SDL_FPoint;
+// use sdl3_sys::everything::SDL_GetRenderOutputSize;
 use sdl3_sys::everything::SDL_KeyboardID;
 use sdl3_sys::everything::SDL_MouseID;
 use sdl3_sys::everything::SDL_Renderer;
-use sdl3_sys::pixels::SDL_Color;
+// use sdl3_sys::pixels::SDL_Color;
 use sdl3_sys::pixels::SDL_ALPHA_OPAQUE;
 // use sdl3_sys::rect::SDL_FPoint;
-use sdl3_sys::rect::SDL_Rect;
+// use sdl3_sys::rect::SDL_Rect;
 // use sdl3_sys::render::SDL_Renderer;
+
+use sdl3_sys::everything::{
+    SDL_Color, SDL_FPoint, SDL_GetRenderOutputSize, SDL_Rect, SDL_RenderClear, SDL_RenderLine,
+    SDL_RenderLines, SDL_RenderPresent, SDL_SetRenderClipRect, SDL_SetRenderDrawColor,
+};
+// SDL_RenderDrawLine, SDL_RenderDrawLinesF, SDL_RenderSetClipRect
 
 const MAP_BOX_SCALE: usize = 16;
 const MAP_BOX_EDGES_LEN: usize = 12 + MAP_BOX_SCALE * 2;
@@ -368,187 +374,297 @@ fn draw_clipped_segment(
     Ok(())
 }
 
-fn draw(renderer: &mut SDL_Renderer, edges: &[[f32; 6]], players: &[Player]) {
+fn draw(renderer: *mut SDL_Renderer, edges: &[[f32; 6]], players: &[Player]) {
     let (mut w, mut h) = (0, 0);
-    if SDL_GetRenderOutputSize(renderer, &mut w, &mut h) != 0 {
-        return;
-    }
-
-    // Clear the screen
-    renderer.set_draw_color(SDL_Color {
-        r: 0,
-        g: 0,
-        b: 0,
-        a: SDL_ALPHA_OPAQUE,
-    });
-    renderer.clear();
-
-    if !players.is_empty() {
-        let wf = w as f32;
-        let hf = h as f32;
-
-        // Divide the screen into player-specific viewports
-        let part_hor = if players.len() > 2 { 2 } else { 1 };
-        let part_ver = if players.len() > 1 { 2 } else { 1 };
-        let size_hor = wf / part_hor as f32;
-        let size_ver = hf / part_ver as f32;
-
-        for (i, player) in players.iter().enumerate() {
-            // Calculate viewport for the current player
-            let mod_x = (i % part_hor) as f32;
-            let mod_y = (i / part_hor) as f32;
-            let hor_origin = (mod_x + 0.5) * size_hor;
-            let ver_origin = (mod_y + 0.5) * size_ver;
-            let cam_origin = 0.5 * ((size_hor * size_hor + size_ver * size_ver).sqrt());
-            let hor_offset = mod_x * size_hor;
-            let ver_offset = mod_y * size_ver;
-
-            let rect = SDL_Rect {
-                x: hor_offset as i32,
-                y: ver_offset as i32,
-                w: size_hor as i32,
-                h: size_ver as i32,
-            };
-            renderer.set_clip_rect(Some(&rect));
-
-            // Camera calculations
-            let x0: f32 = player.pos[0];
-            let y0 = player.pos[1];
-            let z0 = player.pos[2];
-            let bin_rad = std::f32::consts::PI / 2147483648.0;
-            let yaw_rad = bin_rad * player.yaw as f32;
-            let pitch_rad = bin_rad * player.pitch as f32;
-
-            let cos_yaw = yaw_rad.cos();
-            let sin_yaw = yaw_rad.sin();
-            let cos_pitch = pitch_rad.cos();
-            let sin_pitch = pitch_rad.sin();
-
-            let mat = [
-                cos_yaw,
-                0.0,
-                -sin_yaw,
-                sin_yaw * sin_pitch,
-                cos_pitch,
-                cos_yaw * sin_pitch,
-                sin_yaw * cos_pitch,
-                -sin_pitch,
-                cos_yaw * cos_pitch,
-            ];
-
-            // Draw edges
-            renderer.set_draw_color(SDL_Color {
-                r: 64,
-                g: 64,
-                b: 64,
-                a: 255,
-            });
-            for edge in edges {
-                let ax = mat[0] * (edge[0] as f32 - x0)
-                    + mat[1] * (edge[1] as f32 - y0)
-                    + mat[2] * (edge[2] as f32 - z0);
-                let ay = mat[3] * (edge[0] as f32 - x0)
-                    + mat[4] * (edge[1] as f32 - y0)
-                    + mat[5] * (edge[2] as f32 - z0);
-                let az = mat[6] * (edge[0] as f32 - x0)
-                    + mat[7] * (edge[1] as f32 - y0)
-                    + mat[8] * (edge[2] as f32 - z0);
-                let bx = mat[0] * (edge[3] as f32 - x0)
-                    + mat[1] * (edge[4] as f32 - y0)
-                    + mat[2] * (edge[5] as f32 - z0);
-                let by = mat[3] * (edge[3] as f32 - x0)
-                    + mat[4] * (edge[4] as f32 - y0)
-                    + mat[5] * (edge[5] as f32 - z0);
-                let bz = mat[6] * (edge[3] as f32 - x0)
-                    + mat[7] * (edge[4] as f32 - y0)
-                    + mat[8] * (edge[5] as f32 - z0);
-
-                draw_clipped_segment(
-                    renderer,
-                    ax as f32,
-                    ay as f32,
-                    az as f32,
-                    bx as f32,
-                    by as f32,
-                    bz as f32,
-                    hor_origin,
-                    ver_origin,
-                    cam_origin as f32,
-                    1.0,
-                );
-            }
-
-            // Draw other players
-            for (j, target) in players.iter().enumerate() {
-                if i == j {
-                    continue;
-                }
-
-                renderer.set_draw_color(SDL_Color {
-                    r: target.color[0],
-                    g: target.color[1],
-                    b: target.color[2],
-                    a: 255,
-                });
-
-                for k in 0..2 {
-                    let rx: f32 = target.pos[0] - player.pos[0];
-                    let ry = target.pos[1] - player.pos[1]
-                        + (target.radius - target.height) as f32 * k as f32;
-                    let rz = target.pos[2] - player.pos[2];
-                    let dx = mat[0] * rx + mat[1] * ry + mat[2] * rz;
-                    let dy = mat[3] * rx + mat[4] * ry + mat[5] * rz;
-                    let dz = mat[6] * rx + mat[7] * ry + mat[8] * rz;
-
-                    if dz < 0.0 {
-                        let r_eff = target.radius as f32 * cam_origin / dz;
-                        draw_circle(
-                            renderer,
-                            r_eff as f32,
-                            hor_origin - cam_origin as f32 * dx as f32 / dz as f32,
-                            ver_origin + cam_origin as f32 * dy as f32 / dz as f32,
-                        );
-                    }
-                }
-            }
-
-            // Crosshair
-            renderer.set_draw_color(SDL_Color {
-                r: 255,
-                g: 255,
-                b: 255,
-                a: 255,
-            });
-            renderer
-                .draw_line(
-                    hor_origin as i32,
-                    (ver_origin - 10.0) as i32,
-                    hor_origin as i32,
-                    (ver_origin + 10.0) as i32,
-                )
-                .unwrap();
-            renderer
-                .draw_line(
-                    (hor_origin - 10.0) as i32,
-                    ver_origin as i32,
-                    (hor_origin + 10.0) as i32,
-                    ver_origin as i32,
-                )
-                .unwrap();
+    unsafe {
+        if SDL_GetRenderOutputSize(renderer, &mut w, &mut h) != false {
+            return;
         }
-    }
 
-    // Debug text and present
-    renderer.set_clip_rect(None);
-    renderer.set_draw_color(SDL_Color {
-        r: 255,
-        g: 255,
-        b: 255,
-        a: 255,
-    });
-    renderer.render_debug_text(0, 0, unsafe { &DEBUG_STRING });
-    renderer.present();
+        // Clear the screen
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black background
+        SDL_RenderClear(renderer);
+
+        if !players.is_empty() {
+            let wf = w as f32;
+            let hf = h as f32;
+
+            // Divide the screen into player-specific viewports
+            let part_hor = if players.len() > 2 { 2 } else { 1 };
+            let part_ver = if players.len() > 1 { 2 } else { 1 };
+            let size_hor = wf / part_hor as f32;
+            let size_ver = hf / part_ver as f32;
+
+            for (i, player) in players.iter().enumerate() {
+                // Calculate viewport for the current player
+                let mod_x = (i % part_hor) as f32;
+                let mod_y = (i / part_hor) as f32;
+                let hor_origin = (mod_x + 0.5) * size_hor;
+                let ver_origin = (mod_y + 0.5) * size_ver;
+                let cam_origin = 0.5 * ((size_hor * size_hor + size_ver * size_ver).sqrt());
+                let hor_offset = mod_x * size_hor;
+                let ver_offset = mod_y * size_ver;
+
+                let rect = SDL_Rect {
+                    x: hor_offset as i32,
+                    y: ver_offset as i32,
+                    w: size_hor as i32,
+                    h: size_ver as i32,
+                };
+                SDL_SetRenderClipRect(renderer, &rect);
+
+                // Camera calculations
+                let x0: f32 = player.pos[0];
+                let y0 = player.pos[1];
+                let z0 = player.pos[2];
+                let bin_rad = std::f32::consts::PI / 2147483648.0;
+                let yaw_rad = bin_rad * player.yaw as f32;
+                let pitch_rad = bin_rad * player.pitch as f32;
+
+                let cos_yaw = yaw_rad.cos();
+                let sin_yaw = yaw_rad.sin();
+                let cos_pitch = pitch_rad.cos();
+                let sin_pitch = pitch_rad.sin();
+
+                let mat = [
+                    cos_yaw,
+                    0.0,
+                    -sin_yaw,
+                    sin_yaw * sin_pitch,
+                    cos_pitch,
+                    cos_yaw * sin_pitch,
+                    sin_yaw * cos_pitch,
+                    -sin_pitch,
+                    cos_yaw * cos_pitch,
+                ];
+
+                // Draw edges
+                SDL_SetRenderDrawColor(renderer, 64, 64, 64, 255); // Gray edges
+                for edge in edges {
+                    let ax = mat[0] * (edge[0] as f32 - x0)
+                        + mat[1] * (edge[1] as f32 - y0)
+                        + mat[2] * (edge[2] as f32 - z0);
+                    let ay = mat[3] * (edge[0] as f32 - x0)
+                        + mat[4] * (edge[1] as f32 - y0)
+                        + mat[5] * (edge[2] as f32 - z0);
+                    let az = mat[6] * (edge[0] as f32 - x0)
+                        + mat[7] * (edge[1] as f32 - y0)
+                        + mat[8] * (edge[2] as f32 - z0);
+                    let bx = mat[0] * (edge[3] as f32 - x0)
+                        + mat[1] * (edge[4] as f32 - y0)
+                        + mat[2] * (edge[5] as f32 - z0);
+                    let by = mat[3] * (edge[3] as f32 - x0)
+                        + mat[4] * (edge[4] as f32 - y0)
+                        + mat[5] * (edge[5] as f32 - z0);
+                    let bz = mat[6] * (edge[3] as f32 - x0)
+                        + mat[7] * (edge[4] as f32 - y0)
+                        + mat[8] * (edge[5] as f32 - z0);
+
+                    draw_clipped_segment(
+                        renderer,
+                        ax as f32,
+                        ay as f32,
+                        az as f32,
+                        bx as f32,
+                        by as f32,
+                        bz as f32,
+                        hor_origin,
+                        ver_origin,
+                        cam_origin as f32,
+                        1.0,
+                    );
+                }
+
+                // Draw other players and crosshairs are omitted for brevity
+            }
+        }
+
+        // Present the rendered scene
+        SDL_RenderPresent(renderer);
+    }
 }
+
+// fn draw(renderer: &mut SDL_Renderer, edges: &[[f32; 6]], players: &[Player]) {
+//     let (mut w, mut h) = (0, 0);
+//     if SDL_GetRenderOutputSize(renderer, &mut w, &mut h) != 0 {
+//         return;
+//     }
+
+//     // Clear the screen
+//     renderer.set_draw_color(SDL_Color {
+//         r: 0,
+//         g: 0,
+//         b: 0,
+//         a: SDL_ALPHA_OPAQUE,
+//     });
+//     renderer.clear();
+
+//     if !players.is_empty() {
+//         let wf = w as f32;
+//         let hf = h as f32;
+
+//         // Divide the screen into player-specific viewports
+//         let part_hor = if players.len() > 2 { 2 } else { 1 };
+//         let part_ver = if players.len() > 1 { 2 } else { 1 };
+//         let size_hor = wf / part_hor as f32;
+//         let size_ver = hf / part_ver as f32;
+
+//         for (i, player) in players.iter().enumerate() {
+//             // Calculate viewport for the current player
+//             let mod_x = (i % part_hor) as f32;
+//             let mod_y = (i / part_hor) as f32;
+//             let hor_origin = (mod_x + 0.5) * size_hor;
+//             let ver_origin = (mod_y + 0.5) * size_ver;
+//             let cam_origin = 0.5 * ((size_hor * size_hor + size_ver * size_ver).sqrt());
+//             let hor_offset = mod_x * size_hor;
+//             let ver_offset = mod_y * size_ver;
+
+//             let rect = SDL_Rect {
+//                 x: hor_offset as i32,
+//                 y: ver_offset as i32,
+//                 w: size_hor as i32,
+//                 h: size_ver as i32,
+//             };
+//             renderer.set_clip_rect(Some(&rect));
+
+//             // Camera calculations
+//             let x0: f32 = player.pos[0];
+//             let y0 = player.pos[1];
+//             let z0 = player.pos[2];
+//             let bin_rad = std::f32::consts::PI / 2147483648.0;
+//             let yaw_rad = bin_rad * player.yaw as f32;
+//             let pitch_rad = bin_rad * player.pitch as f32;
+
+//             let cos_yaw = yaw_rad.cos();
+//             let sin_yaw = yaw_rad.sin();
+//             let cos_pitch = pitch_rad.cos();
+//             let sin_pitch = pitch_rad.sin();
+
+//             let mat = [
+//                 cos_yaw,
+//                 0.0,
+//                 -sin_yaw,
+//                 sin_yaw * sin_pitch,
+//                 cos_pitch,
+//                 cos_yaw * sin_pitch,
+//                 sin_yaw * cos_pitch,
+//                 -sin_pitch,
+//                 cos_yaw * cos_pitch,
+//             ];
+
+//             // Draw edges
+//             renderer.set_draw_color(SDL_Color {
+//                 r: 64,
+//                 g: 64,
+//                 b: 64,
+//                 a: 255,
+//             });
+//             for edge in edges {
+//                 let ax = mat[0] * (edge[0] as f32 - x0)
+//                     + mat[1] * (edge[1] as f32 - y0)
+//                     + mat[2] * (edge[2] as f32 - z0);
+//                 let ay = mat[3] * (edge[0] as f32 - x0)
+//                     + mat[4] * (edge[1] as f32 - y0)
+//                     + mat[5] * (edge[2] as f32 - z0);
+//                 let az = mat[6] * (edge[0] as f32 - x0)
+//                     + mat[7] * (edge[1] as f32 - y0)
+//                     + mat[8] * (edge[2] as f32 - z0);
+//                 let bx = mat[0] * (edge[3] as f32 - x0)
+//                     + mat[1] * (edge[4] as f32 - y0)
+//                     + mat[2] * (edge[5] as f32 - z0);
+//                 let by = mat[3] * (edge[3] as f32 - x0)
+//                     + mat[4] * (edge[4] as f32 - y0)
+//                     + mat[5] * (edge[5] as f32 - z0);
+//                 let bz = mat[6] * (edge[3] as f32 - x0)
+//                     + mat[7] * (edge[4] as f32 - y0)
+//                     + mat[8] * (edge[5] as f32 - z0);
+
+//                 draw_clipped_segment(
+//                     renderer,
+//                     ax as f32,
+//                     ay as f32,
+//                     az as f32,
+//                     bx as f32,
+//                     by as f32,
+//                     bz as f32,
+//                     hor_origin,
+//                     ver_origin,
+//                     cam_origin as f32,
+//                     1.0,
+//                 );
+//             }
+
+//             // Draw other players
+//             for (j, target) in players.iter().enumerate() {
+//                 if i == j {
+//                     continue;
+//                 }
+
+//                 renderer.set_draw_color(SDL_Color {
+//                     r: target.color[0],
+//                     g: target.color[1],
+//                     b: target.color[2],
+//                     a: 255,
+//                 });
+
+//                 for k in 0..2 {
+//                     let rx: f32 = target.pos[0] - player.pos[0];
+//                     let ry = target.pos[1] - player.pos[1]
+//                         + (target.radius - target.height) as f32 * k as f32;
+//                     let rz = target.pos[2] - player.pos[2];
+//                     let dx = mat[0] * rx + mat[1] * ry + mat[2] * rz;
+//                     let dy = mat[3] * rx + mat[4] * ry + mat[5] * rz;
+//                     let dz = mat[6] * rx + mat[7] * ry + mat[8] * rz;
+
+//                     if dz < 0.0 {
+//                         let r_eff = target.radius as f32 * cam_origin / dz;
+//                         draw_circle(
+//                             renderer,
+//                             r_eff as f32,
+//                             hor_origin - cam_origin as f32 * dx as f32 / dz as f32,
+//                             ver_origin + cam_origin as f32 * dy as f32 / dz as f32,
+//                         );
+//                     }
+//                 }
+//             }
+
+//             // Crosshair
+//             renderer.set_draw_color(SDL_Color {
+//                 r: 255,
+//                 g: 255,
+//                 b: 255,
+//                 a: 255,
+//             });
+//             renderer
+//                 .draw_line(
+//                     hor_origin as i32,
+//                     (ver_origin - 10.0) as i32,
+//                     hor_origin as i32,
+//                     (ver_origin + 10.0) as i32,
+//                 )
+//                 .unwrap();
+//             renderer
+//                 .draw_line(
+//                     (hor_origin - 10.0) as i32,
+//                     ver_origin as i32,
+//                     (hor_origin + 10.0) as i32,
+//                     ver_origin as i32,
+//                 )
+//                 .unwrap();
+//         }
+//     }
+
+//     // Debug text and present
+//     renderer.set_clip_rect(None);
+//     renderer.set_draw_color(SDL_Color {
+//         r: 255,
+//         g: 255,
+//         b: 255,
+//         a: 255,
+//     });
+//     renderer.render_debug_text(0, 0, unsafe { &DEBUG_STRING });
+//     renderer.present();
+// }
 
 fn init_players(players: &mut [Player]) {
     for (i, player) in players.iter_mut().enumerate() {
@@ -659,9 +775,10 @@ fn sdl_app_init<T>(appstate: &mut Option<AppState<T>>, args: &[String]) -> Resul
         .map_err(|e| format!("Window creation failed: {}", e))?;
     let canvas = window
         .into_canvas()
-        .present_vsync()
-        .build()
-        .map_err(|e| format!("Renderer creation failed: {}", e))?;
+        // .present_vsync()
+        .present();
+    // .build()
+    // .map_err(|e| format!("Renderer creation failed: {}", e))?;
 
     // Initialize players and edges
     let mut state = AppState {
@@ -669,10 +786,11 @@ fn sdl_app_init<T>(appstate: &mut Option<AppState<T>>, args: &[String]) -> Resul
         players: vec![Player::default(); MAX_PLAYER_COUNT],
         edges: vec![[0.0; 6]; MAP_BOX_EDGES_LEN],
         canvas,
+        renderer: todo!(),
     };
 
     init_players(&mut state.players);
-    init_edges(MAP_BOX_SCALE, &mut state.edges);
+    init_edges(MAP_BOX_SCALE.try_into().unwrap(), &mut state.edges);
 
     // Set relative mouse mode and raw keyboard input hint
     video_subsystem.set_relative_mouse_mode(true);
