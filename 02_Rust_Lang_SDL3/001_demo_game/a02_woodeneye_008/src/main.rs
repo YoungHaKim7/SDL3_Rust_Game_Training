@@ -705,33 +705,35 @@ fn sdl_app_quit(appstate: Option<Box<AppState>>) {
     // Free the memory by dropping the `appstate`.
     drop(appstate);
 }
-
-use sdl2::event::Event;
-use sdl2::EventPump;
+use sdl3::event::Event;
+use sdl3::init::{InitFlag, Sdl};
+use sdl3::keyboard::Keycode;
+use sdl3::render::{Renderer, RendererFlag};
+use sdl3::timer;
+use sdl3::video::{Window, WindowFlag};
 
 fn main() -> Result<(), String> {
-    // Initialize SDL2
-    let sdl_context = sdl2::init()?;
-    let video_subsystem = sdl_context.video()?;
+    // Initialize SDL3
+    let sdl = Sdl::init(InitFlag::Video | InitFlag::Timer)?;
 
-    // Create the window and renderer
-    let window = video_subsystem
-        .window("Example splitscreen shooter game", 640, 480)
-        .position_centered()
-        .resizable()
-        .build()
-        .map_err(|e| e.to_string())?;
+    // Create the window
+    let window = Window::new(
+        "Example splitscreen shooter game",
+        640,
+        480,
+        WindowFlag::Resizable | WindowFlag::Shown,
+    )?;
 
-    let mut canvas = window
-        .into_canvas()
-        .present_vsync()
-        .build()
-        .map_err(|e| e.to_string())?;
+    // Create the renderer
+    let renderer = Renderer::new(
+        &window,
+        RendererFlag::Accelerated | RendererFlag::PresentVSync,
+    )?;
 
     // Initialize application state
     let mut appstate = AppState {
-        window: None,
-        renderer: canvas,
+        window: Some(window),
+        renderer,
         players: vec![Player::default(); MAX_PLAYER_COUNT],
         edges: vec![[0.0; 6]; MAP_BOX_EDGES_LEN],
         player_count: 1,
@@ -741,23 +743,33 @@ fn main() -> Result<(), String> {
     init_players(&mut appstate.players, MAX_PLAYER_COUNT);
     init_edges(MAP_BOX_SCALE, &mut appstate.edges);
 
-    // Create an event pump for handling input events
-    let mut event_pump: EventPump = sdl_context.event_pump()?;
-
     // Game loop
+    let mut event_queue = sdl.event_queue()?;
+    let mut last_time = timer::performance_counter();
+    let mut accumulator = 0_u64;
+
     'running: loop {
         // Process events
-        for event in event_pump.poll_iter() {
+        while let Some(event) = event_queue.poll() {
             match sdl_app_event(&mut appstate, &event) {
                 Ok(()) => {}
                 Err(_) => break 'running,
             }
         }
 
+        // Calculate delta time
+        let current_time = timer::performance_counter();
+        let delta_time = (current_time - last_time) * 1_000_000 / timer::performance_frequency();
+        last_time = current_time;
+        accumulator += delta_time;
+
         // Perform the game iteration
-        match sdl_app_iterate(&mut appstate) {
-            Ok(()) => {}
-            Err(_) => break 'running,
+        while accumulator >= 16_667 {
+            match sdl_app_iterate(&mut appstate) {
+                Ok(()) => {}
+                Err(_) => break 'running,
+            }
+            accumulator -= 16_667;
         }
     }
 
