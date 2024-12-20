@@ -6,19 +6,21 @@ use sdl3::keyboard::Keycode;
 use sdl3::render::Canvas;
 use sdl3::render::RendererInfo;
 // use sdl3::sys::{SDL_RenderDrawLineF, SDL_Renderer};
-use sdl3::sys::{SDL_FPoint, SDL_RenderDrawLinesF, SDL_Renderer};
+// use sdl3::sys::{SDL_FPoint, SDL_RenderDrawLinesF, SDL_Renderer};
 
 use sdl3::timer;
 use sdl3::video::Window;
 use sdl3::Sdl;
+use sdl3_sys::everything::SDL_FPoint;
 use sdl3_sys::everything::SDL_GetRenderOutputSize;
 use sdl3_sys::everything::SDL_KeyboardID;
 use sdl3_sys::everything::SDL_MouseID;
+use sdl3_sys::everything::SDL_Renderer;
 use sdl3_sys::pixels::SDL_Color;
 use sdl3_sys::pixels::SDL_ALPHA_OPAQUE;
-use sdl3_sys::rect::SDL_FPoint;
+// use sdl3_sys::rect::SDL_FPoint;
 use sdl3_sys::rect::SDL_Rect;
-use sdl3_sys::render::SDL_Renderer;
+// use sdl3_sys::render::SDL_Renderer;
 
 const MAP_BOX_SCALE: usize = 16;
 const MAP_BOX_EDGES_LEN: usize = 12 + MAP_BOX_SCALE * 2;
