@@ -38,3 +38,7 @@ $ cargo add sdl2 -F mixer
     Updating crates.io index
      Locking 7 packages to latest compatible versions
 ```
+
+# (SDL2 rust)Getting pixels of many different colors when drawing with SDL in Rust
+Asked 2 years, 7 months ago / Modified 2 years, 7 months ago 
+- https://stackoverflow.com/questions/72181090/getting-pixels-of-many-different-colors-when-drawing-with-sdl-in-rust
