@@ -99,6 +99,12 @@ impl<T> Default for AppState<T> {
     }
 }
 
+// fn whose_mouse(mouse: SDL_MouseID, players: &dyn Vec<[Option<Player>]>) -> Vec<Option<usize>> {
+//     players.iter().position(|player| match player {
+//         Some(player) if player.mouse == mouse => true,
+//         _ => false,
+//     })
+// }
 fn whose_mouse(mouse: SDL_MouseID, players: &[Option<Player>]) -> Option<usize> {
     players.iter().position(|player| match player {
         Some(player) if player.mouse == mouse => true,
@@ -785,7 +791,7 @@ fn sdl_app_init<T>(appstate: &mut Option<AppState<T>>, args: &[String]) -> Resul
         player_count: 1,
         players: vec![Player::default(); MAX_PLAYER_COUNT],
         edges: vec![[0.0; 6]; MAP_BOX_EDGES_LEN],
-        canvas,
+        canvas: Default::default(),
         renderer: todo!(),
     };
 
@@ -793,7 +799,7 @@ fn sdl_app_init<T>(appstate: &mut Option<AppState<T>>, args: &[String]) -> Resul
     init_edges(MAP_BOX_SCALE.try_into().unwrap(), &mut state.edges);
 
     // Set relative mouse mode and raw keyboard input hint
-    video_subsystem.set_relative_mouse_mode(true);
+    // video_subsystem.set_relative_mouse_mode(true);
     hint::set("SDL_HINT_WINDOWS_RAW_KEYBOARD", "1");
 
     *appstate = Some(state);
@@ -958,6 +964,7 @@ fn sdl_app_init<T>(appstate: &mut Option<AppState<T>>, args: &[String]) -> Resul
 //     }
 //     Ok(())
 // }
+
 fn sdl_app_event<T>(appstate: &mut AppState<T>, event: &sdl3::event::Event) -> Result<(), String> {
     let players = &mut appstate.players;
     let player_count = &mut appstate.player_count;
@@ -966,91 +973,194 @@ fn sdl_app_event<T>(appstate: &mut AppState<T>, event: &sdl3::event::Event) -> R
         sdl3::event::Event::Quit { .. } => {
             return Err("Quit requested".to_string());
         }
-        sdl3::event::Event::JoyDeviceRemoved { which, timestamp } => {
+        sdl3::event::Event::JoyDeviceRemoved { which, .. } => {
             for player in players.iter_mut().take(*player_count) {
                 if player.mouse == *which as u32 {
                     player.mouse = 0;
                 }
             }
         }
-        sdl3::event::Event::JoyDeviceRemoved { which, timestamp } => {
+        sdl3::event::Event::JoyDeviceRemoved { which, .. } => {
             for player in players.iter_mut().take(*player_count) {
                 if player.keyboard == *which as u32 {
                     player.keyboard = 0;
                 }
             }
         }
-        sdl3::event::Event::MouseMotion {
-            which, xrel, yrel, ..
-        } => match whose_mouse(*which, &players[..]) {
-            Some(index) => {
-                players[index].yaw -= (*xrel as i32) * 0x00080000;
-                players[index].pitch = players[index]
-                    .pitch
-                    .saturating_sub((*yrel as i32) * 0x00080000)
-                    .clamp(-0x40000000, 0x40000000);
-            }
-            _ if *which != 0 => {
-                for (i, player) in players.iter_mut().enumerate().take(MAX_PLAYER_COUNT) {
-                    if player.mouse == 0 {
-                        player.mouse = *which;
-                        *player_count = (*player_count).max(i + 1);
-                        break;
-                    }
-                }
-            }
-            _ => (),
-        },
-        sdl3::event::Event::MouseButtonDown { which, .. } => {
-            if let Some(index) = whose_mouse(*which, &players[..]) {
-                shoot(index, players, *player_count);
-            }
-        }
-        sdl3::event::Event::KeyDown { keycode, which, .. } => {
-            if let Some(sym) = keycode {
-                match whose_keyboard(*which, &players[..]) {
-                    Some(index) => match sym {
-                        sdl3::keyboard::Keycode::W => players[index].wasd |= 1,
-                        sdl3::keyboard::Keycode::A => players[index].wasd |= 2,
-                        sdl3::keyboard::Keycode::S => players[index].wasd |= 4,
-                        sdl3::keyboard::Keycode::D => players[index].wasd |= 8,
-                        sdl3::keyboard::Keycode::Space => players[index].wasd |= 16,
-                        _ => {}
-                    },
-                    _ if *which != 0 => {
-                        for (i, player) in players.iter_mut().enumerate().take(MAX_PLAYER_COUNT) {
-                            if player.keyboard == 0 {
-                                player.keyboard = *which;
-                                *player_count = (*player_count).max(i + 1);
-                                break;
-                            }
-                        }
-                    }
-                    _ => (),
-                }
-            }
-        }
-        sdl3::event::Event::KeyUp { keycode, which, .. } => {
-            if let Some(sym) = keycode {
-                if *sym == sdl3::keyboard::Keycode::Escape {
-                    return Err("Quit requested".to_string());
-                }
-                if let Some(index) = whose_keyboard(*which, &players[..]) {
-                    match sym {
-                        sdl3::keyboard::Keycode::W => players[index].wasd &= 30,
-                        sdl3::keyboard::Keycode::A => players[index].wasd &= 29,
-                        sdl3::keyboard::Keycode::S => players[index].wasd &= 27,
-                        sdl3::keyboard::Keycode::D => players[index].wasd &= 23,
-                        sdl3::keyboard::Keycode::Space => players[index].wasd &= 15,
-                        _ => {}
-                    }
-                }
-            }
-        }
+        // sdl3::event::Event::MouseMotion {
+        //     which, xrel, yrel, ..
+        // } => match whose_mouse(*which, &players.iter().map(|p| Some(p)).collect::<Vec<_>>()) {
+        //     Some(index) => {
+        //         players[index].yaw = players[index]
+        //             .yaw
+        //             .saturating_sub((*xrel as u32) * 0x00080000);
+        //         players[index].pitch = players[index]
+        //             .pitch
+        //             .saturating_sub((*yrel as i32) * 0x00080000)
+        //             .clamp(-0x40000000, 0x40000000);
+        //     }
+        //     None if *which != 0 => {
+        //         for (i, player) in players.iter_mut().enumerate().take(MAX_PLAYER_COUNT) {
+        //             if player.mouse == 0 {
+        //                 player.mouse = *which;
+        //                 *player_count = (*player_count).max(i + 1);
+        //                 break;
+        //             }
+        //         }
+        //     }
+        //     _ => (),
+        // },
+        // sdl3::event::Event::MouseButtonDown { which, .. } => {
+        //     if let Some(index) =
+        //         whose_mouse(*which, &players.iter().map(|p| Some(p)).collect::<Vec<_>>())
+        //     {
+        //         shoot(
+        //             index,
+        //             &mut players.iter_mut().map(|p| Some(p)).collect::<Vec<_>>(),
+        //         );
+        //     }
+        // }
+        // sdl3::event::Event::KeyDown { keycode, which, .. } => {
+        //     if let Some(sym) = keycode {
+        //         match whose_keyboard(*which, &players.iter().map(|p| Some(p)).collect::<Vec<_>>()) {
+        //             Some(index) => match sym {
+        //                 sdl3::keyboard::Keycode::W => players[index].wasd |= 1,
+        //                 sdl3::keyboard::Keycode::A => players[index].wasd |= 2,
+        //                 sdl3::keyboard::Keycode::S => players[index].wasd |= 4,
+        //                 sdl3::keyboard::Keycode::D => players[index].wasd |= 8,
+        //                 sdl3::keyboard::Keycode::Space => players[index].wasd |= 16,
+        //                 _ => {}
+        //             },
+        //             None if *which != 0 => {
+        //                 for (i, player) in players.iter_mut().enumerate().take(MAX_PLAYER_COUNT) {
+        //                     if player.keyboard == 0 {
+        //                         player.keyboard = *which;
+        //                         *player_count = (*player_count).max(i + 1);
+        //                         break;
+        //                     }
+        //                 }
+        //             }
+        //             _ => (),
+        //         }
+        //     }
+        // }
+        // sdl3::event::Event::KeyUp { keycode, which, .. } => {
+        //     if let Some(sym) = keycode {
+        //         if *sym == sdl3::keyboard::Keycode::Escape {
+        //             return Err("Quit requested".to_string());
+        //         }
+        //         if let Some(index) =
+        //             whose_keyboard(*which, &players.iter().map(|p| Some(p)).collect::<Vec<_>>())
+        //         {
+        //             match sym {
+        //                 sdl3::keyboard::Keycode::W => players[index].wasd &= 30,
+        //                 sdl3::keyboard::Keycode::A => players[index].wasd &= 29,
+        //                 sdl3::keyboard::Keycode::S => players[index].wasd &= 27,
+        //                 sdl3::keyboard::Keycode::D => players[index].wasd &= 23,
+        //                 sdl3::keyboard::Keycode::Space => players[index].wasd &= 15,
+        //                 _ => {}
+        //             }
+        //         }
+        //     }
+        // }
         _ => {}
     }
     Ok(())
 }
+
+// fn sdl_app_event<T>(appstate: &mut AppState<T>, event: &sdl3::event::Event) -> Result<(), String> {
+//     let players = &mut appstate.players;
+//     let player_count = &mut appstate.player_count;
+
+//     match event {
+//         sdl3::event::Event::Quit { .. } => {
+//             return Err("Quit requested".to_string());
+//         }
+//         sdl3::event::Event::JoyDeviceRemoved { which, timestamp } => {
+//             for player in players.iter_mut().take(*player_count) {
+//                 if player.mouse == *which as u32 {
+//                     player.mouse = 0;
+//                 }
+//             }
+//         }
+//         sdl3::event::Event::JoyDeviceRemoved { which, timestamp } => {
+//             for player in players.iter_mut().take(*player_count) {
+//                 if player.keyboard == *which as u32 {
+//                     player.keyboard = 0;
+//                 }
+//             }
+//         }
+//         sdl3::event::Event::MouseMotion {
+//             which, xrel, yrel, ..
+//         } => match whose_mouse(*which, &[Some(players).as_slice()]) {
+//             Some(index) => {
+//                 players[index].yaw -= (*xrel as i32) * 0x00080000;
+//                 players[index].pitch = players[index]
+//                     .pitch
+//                     .saturating_sub((*yrel as i32) * 0x00080000)
+//                     .clamp(-0x40000000, 0x40000000);
+//             }
+//             _ if *which != 0 => {
+//                 for (i, player) in players.iter_mut().enumerate().take(MAX_PLAYER_COUNT) {
+//                     if player.mouse == 0 {
+//                         player.mouse = *which;
+//                         *player_count = (*player_count).max(i + 1);
+//                         break;
+//                     }
+//                 }
+//             }
+//             _ => (),
+//         },
+//         sdl3::event::Event::MouseButtonDown { which, .. } => {
+//             if let Some(index) = whose_mouse(*which, &players[..]) {
+//                 shoot(index, players, *player_count);
+//             }
+//         }
+//         sdl3::event::Event::KeyDown { keycode, which, .. } => {
+//             if let Some(sym) = keycode {
+//                 match whose_keyboard(*which, &players[..]) {
+//                     Some(index) => match sym {
+//                         sdl3::keyboard::Keycode::W => players[index].wasd |= 1,
+//                         sdl3::keyboard::Keycode::A => players[index].wasd |= 2,
+//                         sdl3::keyboard::Keycode::S => players[index].wasd |= 4,
+//                         sdl3::keyboard::Keycode::D => players[index].wasd |= 8,
+//                         sdl3::keyboard::Keycode::Space => players[index].wasd |= 16,
+//                         _ => {}
+//                     },
+//                     _ if *which != 0 => {
+//                         for (i, player) in players.iter_mut().enumerate().take(MAX_PLAYER_COUNT) {
+//                             if player.keyboard == 0 {
+//                                 player.keyboard = *which;
+//                                 *player_count = (*player_count).max(i + 1);
+//                                 break;
+//                             }
+//                         }
+//                     }
+//                     _ => (),
+//                 }
+//             }
+//         }
+//         sdl3::event::Event::KeyUp { keycode, which, .. } => {
+//             if let Some(sym) = keycode {
+//                 if *sym == sdl3::keyboard::Keycode::Escape {
+//                     return Err("Quit requested".to_string());
+//                 }
+//                 if let Some(index) = whose_keyboard(*which, &players[..]) {
+//                     match sym {
+//                         sdl3::keyboard::Keycode::W => players[index].wasd &= 30,
+//                         sdl3::keyboard::Keycode::A => players[index].wasd &= 29,
+//                         sdl3::keyboard::Keycode::S => players[index].wasd &= 27,
+//                         sdl3::keyboard::Keycode::D => players[index].wasd &= 23,
+//                         sdl3::keyboard::Keycode::Space => players[index].wasd &= 15,
+//                         _ => {}
+//                     }
+//                 }
+//             }
+//         }
+//         _ => {}
+//     }
+//     Ok(())
+// }
 
 // fn sdl_app_iterate(appstate: &mut AppState) -> Result<(), String> {
 //     use std::time::{Duration, Instant};
@@ -1116,14 +1226,15 @@ fn sdl_app_iterate<T>(appstate: &mut AppState<T>) -> Result<(), String> {
     };
 
     // Update game state
-    update(&mut appstate.players, appstate.player_count, dt_ns);
+    // update(&mut appstate.players, appstate.player_count, dt_ns);
+    update(&mut appstate.players, dt_ns);
 
     // Render the scene
     draw(
         &appstate.renderer,
         &appstate.edges,
         &appstate.players,
-        appstate.player_count,
+        // appstate.player_count,
     );
 
     // Handle FPS debug string
