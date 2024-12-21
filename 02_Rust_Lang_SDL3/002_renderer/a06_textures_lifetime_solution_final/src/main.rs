@@ -1,10 +1,12 @@
 extern crate sdl3;
 
+use std::path::Path;
+
 use sdl3::event::Event;
 use sdl3::pixels::Color;
+use sdl3::render::FRect;
 use sdl3::render::{Canvas, Texture};
-use sdl3::render::{FRect, TextureCreator};
-use sdl3::video::{Window, WindowContext};
+use sdl3::video::Window;
 use sdl3::Sdl;
 
 const WINDOW_WIDTH: u32 = 640;
@@ -12,7 +14,6 @@ const WINDOW_HEIGHT: u32 = 480;
 
 struct AppState {
     canvas: Canvas<Window>,
-    texture_creator: TextureCreator<WindowContext>,
     texture: Texture,
     texture_width: u32,
     texture_height: u32,
@@ -28,23 +29,26 @@ impl AppState {
             .build()
             .map_err(|e| e.to_string())?;
 
-        let canvas = window.into_canvas();
-        let texture_creator = canvas.texture_creator();
+        let mut canvas = window.into_canvas();
 
-        let base_path = sdl3::filesystem::get_base_path().map_err(|e| format!("{:?}", e))?;
-        let bmp_path = format!("{:?}/sample.bmp", base_path);
+        // let base_path = sdl3::filesystem::get_base_path().map_err(|e| format!("{:?}", e))?;
+        // let bmp_path = format!("{:?}../../assets/thumbnail.png", base_path);
+        let bmp_path = Path::new("./assets/sample640_426.bmp");
         let surface = sdl3::surface::Surface::load_bmp(bmp_path).map_err(|e| e.to_string())?;
 
         let texture_width = surface.width();
         let texture_height = surface.height();
 
+        // Create the texture creator first
+        let texture_creator = canvas.texture_creator();
+
+        // Now, use it to create the texture. This will not drop the temporary value.
         let texture = texture_creator
             .create_texture_from_surface(surface)
             .map_err(|e| e.to_string())?;
 
         Ok(Self {
             canvas,
-            texture_creator,
             texture,
             texture_width,
             texture_height,
