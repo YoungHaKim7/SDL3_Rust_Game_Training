@@ -3,6 +3,11 @@
 - https://crates.io/crates/sdl3
   - https://github.com/revmischa/sdl3-rs
 
+- SDL3 new GPU API merged (github.com/libsdl-org)
+  - https://news.ycombinator.com/item?id=41396260
+  - Cross-platform, graphics API agnostic, "Bring Your Own Engine/Framework" style rendering library.
+    - https://github.com/bkaradzic/bgfx
+
 <hr />
 
 # `Cargo.toml`
