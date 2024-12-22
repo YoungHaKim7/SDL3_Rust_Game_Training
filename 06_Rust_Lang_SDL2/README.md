@@ -39,6 +39,9 @@ $ cargo add sdl2 -F mixer
      Locking 7 packages to latest compatible versions
 ```
 
+# (살려보자) 우주 구현한 러스트 코드 5년전꺼라.. 갱신 해야한다.ㅠ ㅠ
+https://github.com/bcamp1/Gravisim
+
 # (SDL2 rust)Getting pixels of many different colors when drawing with SDL in Rust
 Asked 2 years, 7 months ago / Modified 2 years, 7 months ago 
 - https://stackoverflow.com/questions/72181090/getting-pixels-of-many-different-colors-when-drawing-with-sdl-in-rust
