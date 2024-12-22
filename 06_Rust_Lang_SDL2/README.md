@@ -40,7 +40,9 @@ $ cargo add sdl2 -F mixer
 ```
 
 # (살려보자) 우주 구현한 러스트 코드 5년전꺼라.. 갱신 해야한다.ㅠ ㅠ
-https://github.com/bcamp1/Gravisim
+- https://github.com/bcamp1/Gravisim
+  - 요즘 러스트 버젼 1.83으로 살려냄
+    - https://github.com/YoungHaKim7/sdl2_gravisim
 
 # (SDL2 rust)Getting pixels of many different colors when drawing with SDL in Rust
 Asked 2 years, 7 months ago / Modified 2 years, 7 months ago 
