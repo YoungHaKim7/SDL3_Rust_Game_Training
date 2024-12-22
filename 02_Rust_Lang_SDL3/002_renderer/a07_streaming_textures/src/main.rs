@@ -1,11 +1,8 @@
 extern crate sdl3;
 
 use sdl3::event::Event;
-use sdl3::pixels::PixelFormatEnum;
-use sdl3::rect::Rect;
-use sdl3::render::FRect;
-use sdl3::render::{Canvas, Texture};
-use sdl3::surface::Surface;
+use sdl3::pixels::PixelFormat;
+use sdl3::render::{Canvas, FRect, Texture};
 use sdl3::video::Window;
 use sdl3::Sdl;
 use sdl3_sys::pixels::SDL_PixelFormat;
@@ -15,20 +12,14 @@ const TEXTURE_SIZE: u32 = 150;
 const WINDOW_WIDTH: u32 = 640;
 const WINDOW_HEIGHT: u32 = 480;
 
-struct AppState<'a> {
+struct AppState {
     canvas: Canvas<Window>,
-    texture: Texture<'a>,
+    texture: Texture,
     running: bool,
 }
 
-impl<'a> AppState<'a> {
-    fn new(sdl_context: &'a Sdl) -> Result<Self, Box<dyn Error>> {
-        sdl_context.set_metadata(
-            "Example Renderer Streaming Textures",
-            "1.0",
-            "com.example.renderer-streaming-textures",
-        );
-
+impl AppState {
+    fn new(sdl_context: &Sdl) -> Result<Self, Box<dyn Error>> {
         let video_subsystem = sdl_context.video()?;
         let window = video_subsystem
             .window(
@@ -39,10 +30,10 @@ impl<'a> AppState<'a> {
             .position_centered()
             .build()?;
 
-        let canvas = window.into_canvas();
+        let mut canvas = window.into_canvas();
         let texture_creator = canvas.texture_creator();
         let texture = texture_creator.create_texture(
-            SDL_PixelFormat::RGB332;
+            unsafe { PixelFormat::from_ll(SDL_PixelFormat::RGB24) },
             sdl3::render::TextureAccess::Streaming,
             TEXTURE_SIZE,
             TEXTURE_SIZE,
@@ -64,23 +55,36 @@ impl<'a> AppState<'a> {
     fn iterate(&mut self) {
         let now = sdl3::timer::ticks() as u64;
 
-        // Calculate color and position for the moving strip
+        // Calculate position for the moving strip
         let direction = if (now % 2000) >= 1000 { 1.0 } else { -1.0 };
         let scale = (((now % 1000) as f32 - 500.0) / 500.0) * direction;
 
-        // Lock the texture to update it
-        if let Ok(mut surface) = self.texture.lock_to_surface(None) {
-            let format = surface.pixel_format_enum();
-            surface.fill_rect(None, format.map_rgb(0, 0, 0)).unwrap();
+        // Update the texture
+        self.texture
+            .with_lock(None, |buffer: &mut [u8], pitch: usize| {
+                let bytes_per_pixel = 4;
 
-            let strip_height = TEXTURE_SIZE / 10;
-            let y_position = ((TEXTURE_SIZE - strip_height) as f32 * ((scale + 1.0) / 2.0)) as i32;
+                // Clear the texture (black background)
+                for pixel in buffer.iter_mut() {
+                    *pixel = 0;
+                }
 
-            let strip_rect = Rect::new(0, y_position, TEXTURE_SIZE, strip_height);
-            surface
-                .fill_rect(Some(strip_rect), format.map_rgb(0, 255, 0))
-                .unwrap();
-        }
+                // Draw the green strip
+                let strip_height = TEXTURE_SIZE / 10;
+                let y_position =
+                    ((TEXTURE_SIZE - strip_height) as f32 * ((scale + 1.0) / 2.0)) as usize;
+
+                for y in y_position..(y_position + strip_height as usize) {
+                    for x in 0..TEXTURE_SIZE as usize {
+                        let offset = y * pitch + x * bytes_per_pixel;
+                        buffer[offset] = 0; // Red
+                        buffer[offset + 1] = 255; // Green
+                        buffer[offset + 2] = 0; // Blue
+                        buffer[offset + 3] = 255; // Alpha
+                    }
+                }
+            })
+            .unwrap();
 
         // Clear the screen
         self.canvas
