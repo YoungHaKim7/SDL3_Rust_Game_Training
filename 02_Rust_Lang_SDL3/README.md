@@ -67,3 +67,7 @@ texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 
 # libsdl-org news(the latest news)
 - https://news.ycombinator.com/from?site=github.com/libsdl-org
+
+# Simple Directmedia Layer
+- Simple Directmedia Layer (SDL) is a framework for creating cross-platform games and applications.
+  - https://github.com/libsdl-org
