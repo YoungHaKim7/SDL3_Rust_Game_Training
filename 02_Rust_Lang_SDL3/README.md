@@ -60,3 +60,7 @@ texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 > - There are no tests yet, except for static asserts translated from the original headers
 > - Some less common targets are missing detection or features to enable corresponding SDL features
 
+
+# SDL3 new GPU API merged (Hacker News)
+- [SDL3 is still in preview, but the new GPU API is now merged into the main branch while SDL3 maintainers apply some final tweaks(240930)](https://news.ycombinator.com/item?id=41396260)
+  - Unreal/Unity are not the only solutions. There is also bgfx (https://github.com/bkaradzic/bgfx), which is quite popular and sokol gfx (https://github.com/floooh/sokol) which I know of. Of course there are many more lesser known ones.
