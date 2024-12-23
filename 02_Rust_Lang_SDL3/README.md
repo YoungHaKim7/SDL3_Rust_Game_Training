@@ -56,7 +56,7 @@ texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 
 - https://docs.rs/sdl3-sys/latest/sdl3_sys/
 
-- Known issues:
+- Known issues(241223):
 
 > [!CAUTION]
 > - Satellite libraries (`mixer`, `image`, `ttf`) aren’t available yet
