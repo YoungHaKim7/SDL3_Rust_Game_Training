@@ -42,6 +42,20 @@ texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
         }
     }
 })?;
-
-
 ```
+
+
+# sdl3-sys: Low level Rust bindings for SDL 3
+
+- This version of sdl3-sys has bindings for SDL version 3.1.6-preview and earlier.
+
+- SDL 3 is ABI stable as of the 3.1.3 preview release, but sdl3-sys is new and may have bugs. Please submit an issue at github if you have any issues or comments!
+
+- https://docs.rs/sdl3-sys/latest/sdl3_sys/
+
+|SDL 3 is ABI stable as of the 3.1.3 preview release, but sdl3-sys is new and may have bugs <br ?> Known issues:|
+|-|
+|Satellite libraries (mixer, image, ttf) aren’t available yet|
+There are no tests yet, except for static asserts translated from the original headers|
+|Some less common targets are missing detection or features to enable corresponding SDL features|
+
