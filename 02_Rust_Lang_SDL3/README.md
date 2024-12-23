@@ -49,6 +49,7 @@ texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 
 
 # sdl3-sys: Low level Rust bindings for SDL 3
+- https://github.com/maia-s/sdl3-sys-rs
 
 - This version of `sdl3-sys` has bindings for SDL version `3.1.6-preview` and earlier.
 
