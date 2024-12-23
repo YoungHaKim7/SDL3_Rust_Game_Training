@@ -8,6 +8,9 @@
   - Cross-platform, graphics API agnostic, "Bring Your Own Engine/Framework" style rendering library.
     - https://github.com/bkaradzic/bgfx
 
+- SDL3 wiki
+  - https://github.com/libsdl-org/sdlwiki
+
 <hr />
 
 # `Cargo.toml`
