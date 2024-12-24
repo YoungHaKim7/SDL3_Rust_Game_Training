@@ -1,0 +1,15 @@
+[package]
+name = "sdl3-sys-gen"
+version = "0.1.0"
+edition = "2021"
+authors = ["Maia S. R."]
+license = "Zlib"
+
+[features]
+default = []
+
+#extra-debugging = []
+
+[dependencies]
+const-it = "0.2"
+str-block = "0.1"

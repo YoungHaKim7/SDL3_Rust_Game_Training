@@ -1,0 +1,2 @@
+- https://github.com/maia-s/sdl3-sys-rs
+- https://docs.rs/sdl3-sys/latest/sdl3_sys/index.html
