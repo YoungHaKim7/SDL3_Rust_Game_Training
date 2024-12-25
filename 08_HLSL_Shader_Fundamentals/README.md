@@ -1,6 +1,10 @@
 # HLSL Tutorials | Ben Cloward
 - https://youtube.com/playlist?list=PL78XDi0TS4lEMvytsE_MoWEpzBcukXv9b&si=zXtEjjrJyFRVaa4F
 
+# Shader Tutorial Series | Lewis Lepton
+- https://youtube.com/playlist?list=PL4neAtv21WOmIrTrkNO3xCyrxg4LKkrF7&si=gLxRV8ViChwKcrEL
+
+
 <hr />
 
 # 쉐이더 기술 이해_Shader compiler and tools for SDLSL (Simple Directmedia Layer Shader Language)[|🔝|](#link)
