@@ -15,3 +15,9 @@
   - [SDL GPU SUPPORT: THE BASIC IDEA](https://github.com/libsdl-org/SDL_shader_tools/blob/main/docs/README-SDL_gpu.md)
 
 - [Shader translation library for SDL's GPU API._https://github.com/libsdl-org/SDL_shadercross](https://github.com/libsdl-org/SDL_shadercross)
+
+<hr />
+
+# GLSL snippets
+
+- https://gist.github.com/lewislepton/8b17f56baa7f1790a70284e7520f9623
