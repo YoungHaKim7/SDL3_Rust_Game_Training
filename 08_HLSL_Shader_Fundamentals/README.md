@@ -1,3 +1,12 @@
+# link 
+
+- [GLSL기능들](https://github.com/KhronosGroup/GLSL/tree/main/extensions/ext)
+  - [GLSL기능들(Extension Specifications)](https://github.com/KhronosGroup/GLSL#extension-specifications-in-this-repository)
+- [zig언어로 만든 GLSL_analyzer](https://github.com/nolanderc/glsl_analyzer)
+- [Rust언어로 만든 GLSL_lsp](https://github.com/KubaP/glsl-lsp)
+
+<hr />
+
 # HLSL Tutorials | Ben Cloward
 - https://youtube.com/playlist?list=PL78XDi0TS4lEMvytsE_MoWEpzBcukXv9b&si=zXtEjjrJyFRVaa4F
 
