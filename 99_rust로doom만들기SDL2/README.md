@@ -24,3 +24,10 @@ sudo apt install libsdl2-mixer-dev libsdl2-dev
 # etc그외 프로젝트들
 
 - https://www.lohninger.com/examples_part1.html
+
+
+# c
+- https://blog.conan.io/2023/07/20/introduction-to-game-dev-with-sdl2.html
+
+- https://github.com/conan-io/examples2
+
