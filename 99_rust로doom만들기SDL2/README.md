@@ -18,3 +18,9 @@ sudo apt install libsdl2-mixer-dev libsdl2-dev
 
 # Rust로 테트리스 만들기
 - https://github.com/bigOconstant/RustTetris
+
+<hr />
+
+# etc그외 프로젝트들
+
+- https://www.lohninger.com/examples_part1.html
