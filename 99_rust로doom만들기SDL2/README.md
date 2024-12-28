@@ -13,4 +13,8 @@ sudo apt install libsdl2-mixer-dev libsdl2-dev
 
 # C++로 Doom만들기
 - https://github.com/amroibrahim/DIYDoom
-- 
+
+<hr />
+
+# Rust로 테트리스 만들기
+- https://github.com/bigOconstant/RustTetris
