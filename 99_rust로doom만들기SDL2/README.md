@@ -33,3 +33,6 @@ sudo apt install libsdl2-mixer-dev libsdl2-dev
 
 # C++
 - https://thenumb.at/cpp-course/
+
+- snake게임 만들기
+  - https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl
