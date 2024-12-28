@@ -26,8 +26,10 @@ sudo apt install libsdl2-mixer-dev libsdl2-dev
 - https://www.lohninger.com/examples_part1.html
 
 
-# c
+# C언어
 - https://blog.conan.io/2023/07/20/introduction-to-game-dev-with-sdl2.html
 
 - https://github.com/conan-io/examples2
 
+# C++
+- https://thenumb.at/cpp-course/
