@@ -15,6 +15,43 @@ const SCREEN_WIDTH: u32 = 640;
 const SCREEN_HEIGHT: u32 = 480;
 const INK_SIZE: i32 = 5;
 
+fn create_texture<'a>(
+    texture_creator: &'a TextureCreator<WindowContext>,
+) -> Result<Texture<'a>, String> {
+    texture_creator
+        .create_texture_target(None, SCREEN_WIDTH, SCREEN_HEIGHT)
+        .map_err(|e| e.to_string())
+}
+
+fn update_texture(texture: &mut Texture, pixels: &[u8]) -> Result<(), UpdateTextureError> {
+    texture.update(None, pixels, (SCREEN_WIDTH * 4) as usize)
+}
+
+fn render(
+    canvas: &mut sdl2::render::Canvas<sdl2::video::Window>,
+    texture: &Texture,
+) -> Result<(), String> {
+    canvas.set_draw_color(Color::RGB(0, 0, 0));
+    canvas.clear();
+    canvas.copy(texture, None, None)?;
+    canvas.present();
+    Ok(())
+}
+
+fn draw_pixels(pixels: &mut [u8], mouse_x: i32, mouse_y: i32) {
+    for y in (mouse_y - INK_SIZE / 2)..=(mouse_y + INK_SIZE / 2) {
+        for x in (mouse_x - INK_SIZE / 2)..=(mouse_x + INK_SIZE / 2) {
+            if x >= 0 && x < SCREEN_WIDTH as i32 && y >= 0 && y < SCREEN_HEIGHT as i32 {
+                let offset = ((y as u32 * SCREEN_WIDTH + x as u32) * 4) as usize;
+                pixels[offset] = 0;
+                pixels[offset + 1] = 0;
+                pixels[offset + 2] = 0;
+                pixels[offset + 3] = 255;
+            }
+        }
+    }
+}
+
 fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
@@ -64,41 +101,4 @@ fn main() -> Result<(), String> {
     }
 
     Ok(())
-}
-
-fn create_texture<'a>(
-    texture_creator: &'a TextureCreator<WindowContext>,
-) -> Result<Texture<'a>, String> {
-    texture_creator
-        .create_texture_target(None, SCREEN_WIDTH, SCREEN_HEIGHT)
-        .map_err(|e| e.to_string())
-}
-
-fn update_texture(texture: &mut Texture, pixels: &[u8]) -> Result<(), UpdateTextureError> {
-    texture.update(None, pixels, (SCREEN_WIDTH * 4) as usize)
-}
-
-fn render(
-    canvas: &mut sdl2::render::Canvas<sdl2::video::Window>,
-    texture: &Texture,
-) -> Result<(), String> {
-    canvas.set_draw_color(Color::RGB(0, 0, 0));
-    canvas.clear();
-    canvas.copy(texture, None, None)?;
-    canvas.present();
-    Ok(())
-}
-
-fn draw_pixels(pixels: &mut [u8], mouse_x: i32, mouse_y: i32) {
-    for y in (mouse_y - INK_SIZE / 2)..=(mouse_y + INK_SIZE / 2) {
-        for x in (mouse_x - INK_SIZE / 2)..=(mouse_x + INK_SIZE / 2) {
-            if x >= 0 && x < SCREEN_WIDTH as i32 && y >= 0 && y < SCREEN_HEIGHT as i32 {
-                let offset = ((y as u32 * SCREEN_WIDTH + x as u32) * 4) as usize;
-                pixels[offset] = 0;
-                pixels[offset + 1] = 0;
-                pixels[offset + 2] = 0;
-                pixels[offset + 3] = 255;
-            }
-        }
-    }
 }
