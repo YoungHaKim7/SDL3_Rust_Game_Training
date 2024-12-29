@@ -1,5 +1,7 @@
 # raylib
 - https://github.com/raysan5/raylib-intro-course
+- 파이썬 코드 맘에 안들지만 아쉬운데로
+  - https://github.com/clear-code-projects/raylib_intro
 
 
 <hr />
