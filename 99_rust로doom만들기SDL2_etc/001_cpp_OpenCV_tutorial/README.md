@@ -1,4 +1,4 @@
-
+- https://stackoverflow.com/questions/9094941/compiling-opencv-in-c
 
 ```bash
 ng: /usr/local/include/opencv4/opencv2/video/video.hpp
