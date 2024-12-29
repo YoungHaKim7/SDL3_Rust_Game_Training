@@ -23,6 +23,11 @@ sudo apt install libsdl2-mixer-dev libsdl2-dev
 
 # Rust로 테트리스 만들기
 - https://github.com/bigOconstant/RustTetris
+- https://github.com/flippingbitss/rust-tetris
+  - https://wikidocs.net/194500
+
+- sdl2는 아니지만
+  - https://github.com/AndrewJakubowicz/ggezFlappyCrabby.git
 
 <hr />
 
