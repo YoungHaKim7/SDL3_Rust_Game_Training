@@ -15,6 +15,22 @@ sudo make install
 sudo ldconfig
 ```
 
+```
+Install the project...
+-- Install configuration: "Debug"
+-- Installing: /usr/local/lib/libraylib.so.5.5.0
+-- Installing: /usr/local/lib/libraylib.so.550
+-- Installing: /usr/local/lib/libraylib.so
+-- Installing: /usr/local/include/raylib.h
+-- Installing: /usr/local/include/rcamera.h
+-- Installing: /usr/local/include/rlgl.h
+-- Installing: /usr/local/include/raymath.h
+-- Installing: /usr/local/lib/pkgconfig/raylib.pc
+-- Installing: /usr/local/lib/cmake/raylib/raylib-config-version.cmake
+-- Installing: /usr/local/lib/cmake/raylib/raylib-config.cmake
+
+```
+
 - https://github.com/raysan5/raylib-intro-course
 - 파이썬 코드 맘에 안들지만 아쉬운데로
   - https://github.com/clear-code-projects/raylib_intro
