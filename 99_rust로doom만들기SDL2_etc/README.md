@@ -2,6 +2,19 @@
 - https://www.raylib.com/
   - API https://www.raylib.com/cheatsheet/cheatsheet.html
   - raylib https://github.com/raysan5/raylib
+
+- https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux#build-raylib-using-cmake
+
+```
+git clone https://github.com/raysan5/raylib.git raylib
+cd raylib
+mkdir build && cd build
+cmake -DBUILD_SHARED_LIBS=ON ..
+make
+sudo make install
+sudo ldconfig
+```
+
 - https://github.com/raysan5/raylib-intro-course
 - 파이썬 코드 맘에 안들지만 아쉬운데로
   - https://github.com/clear-code-projects/raylib_intro
