@@ -47,6 +47,7 @@ fn main() -> Result<(), String> {
         // Draw a white line
         canvas.set_draw_color(Color::RGB(255, 255, 255));
         canvas.draw_line((5, 5), (100, 120))?;
+        canvas.draw_line((50, 50), (300, 300))?;
 
         // Draw the rectangle
         canvas.draw_rect(rectangle)?;
