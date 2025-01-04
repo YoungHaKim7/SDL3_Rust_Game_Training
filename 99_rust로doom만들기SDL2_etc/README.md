@@ -40,6 +40,7 @@ Install the project...
 
 # DOOM Open Source Release 
 - https://github.com/id-Software/DOOM
+- https://github.com/id-Software/DOOM-3
 
 <hr />
 
