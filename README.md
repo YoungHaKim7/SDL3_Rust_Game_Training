@@ -42,7 +42,7 @@
 <hr />
 
 - WindowsOS(WSL2로(가상 Linux) GUI실행시키기)
-  - [WindowsOS(WSL2에서 GUI실행시키기 굿)]()
+  - [WindowsOS(WSL2에서 GUI실행시키기 굿)](#windowsoswsl2에서-gui실행시키기-굿)
 
 <hr />
 
