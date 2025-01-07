@@ -8,6 +8,8 @@
   - [SDL3 & SDL2 Install_ git clone으로cmake함](#install)
 	  - macOS
 		  - [macOS설치 방법인데  위 git clone을 마지막에 해줘야함.](#macossdl2-sdl3-설치)
+    - LinuxOS
+      - [(LinuxOS Install)What you need to do to install SDL is](#linuxos-installwhat-you-need-to-do-to-install-sdl-is)
 - [241208진정한개발자!!_Is SDL3 Ready For Production? | Tsoding Daily](https://youtu.be/PuE98lipGU8?si=_HmaD0hT9UK-g5bA)
 
 - [FishShell Setting](#macos-pathfishshell)
