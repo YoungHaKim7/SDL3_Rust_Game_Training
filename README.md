@@ -41,6 +41,11 @@
 
 <hr />
 
+- WindowsOS(WSL2로(가상 Linux) GUI실행시키기)
+  - [WindowsOS(WSL2에서 GUI실행시키기 굿)]()
+
+<hr />
+
 # SDL3_Rust_Game_Training[|🔝|](#link)
 
 - SDL3-rs[![crates.io](https://img.shields.io/crates/v/sdl3.svg)](https://crates.io/crates/sdl3)![Crates.io](https://img.shields.io/crates/l/sdl3)![Downloads](https://img.shields.io/crates/d/sdl3.svg)<a href="https://github.com/libsdl-org/SDL"><img alt="githubicon" width="20px" src="https://user-images.githubusercontent.com/67513038/218287708-001511d7-1cce-42d3-92d2-4a61193b38f0.png" /></a>
@@ -534,3 +539,9 @@ find /usr/ -type f -iname \*sdl\*
 # SDL2 game tutorial[|🔝|](#link)
 - https://discourse.libsdl.org/t/sdl2-game-tutorials/25356
 - https://www.parallelrealities.co.uk/tutorials/#rogue
+
+<hr />
+
+# WindowsOS(WSL2에서 GUI실행시키기 굿)[|🔝|](#link)
+- https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps
+- https://stackoverflow.com/questions/77077495/sdl2-not-showing-window-in-wsl2
