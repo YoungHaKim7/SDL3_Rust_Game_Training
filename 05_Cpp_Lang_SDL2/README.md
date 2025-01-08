@@ -13,23 +13,23 @@
 
 <hr />
 
-# C++ 게임만들기 Tutorial
+# C++ 게임만들기 Tutorial[|🔝|](#link)
 - [모아보기Remaking Cavestory in C++ |  Limeoats](https://youtube.com/playlist?list=PLNOBk_id22bw6LXhrGfhVwqQIa-M2MsLa&si=ljzoW-9RzauwAaTJ)
   - https://github.com/Limeoats/cavestory-development
 
 - [How To Make A Game In C++ & SDL2 From | Let's Make Games](https://youtube.com/playlist?list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx&si=KDT_0wqjitc2tqkS)
 
-# macOS설치
+# macOS설치[|🔝|](#link)
 - [Ep. 4 Setup/ SDL Mac (Including M1) Setup with Simple OpenGL Application | Introduction to SDL2](https://youtu.be/V6ACATpl2LQ?si=ZAfU_EoyvQn0h23c)
 
 - [모아보기SDL2 Simple Directmedia Layer | Mike Shah](https://youtube.com/playlist?list=PLvv0ScY6vfd-p1gSnbQhY7vMe2rng0IL0&si=8K3WhN7AX2ooxGKo)
 
 <hr />
 
-# macOS(SDL2 설치하기)
+# macOS(SDL2 설치하기)[|🔝|](#link)
 - https://stackoverflow.com/questions/28016258/using-homebrew-installed-sdl2-with-xcode
 
-# justfile(linux std=C++17 version)
+# justfile(linux std=C++17 version)[|🔝|](#link)
 
 ```justfile
 # which g++
@@ -245,7 +245,7 @@ vscode:
 	echo '}' >> .vscode/tasks.json
 ```
 
-# justfile(SDL2)
+# justfile(SDL2)[|🔝|](#link)
 
 ```justfile
 # which g++ 
@@ -451,7 +451,7 @@ vscode:
 ```
 
 
-# macOS(macOS전용justfile)
+# macOS(macOS전용justfile)[|🔝|](#link)
 
 
 ```justfile
