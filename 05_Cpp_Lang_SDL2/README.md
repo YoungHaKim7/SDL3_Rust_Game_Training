@@ -9,6 +9,7 @@
 # link
 
 - [justfile_macOS전용](#macosmacos전용justfile)
+- [justfile_LinuxOS](#justfilelinux-stdc17-version)
 
 <hr />
 
