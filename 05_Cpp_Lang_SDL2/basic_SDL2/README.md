@@ -11,3 +11,6 @@
 - https://youtube.com/playlist?list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl&si=_-_Zq-DrQDXwuPkv
 
 - https://github.com/TheCherno/RayTracing
+
+# How to draw circles, arcs and vector graphics in SDL?
+- https://stackoverflow.com/questions/38334081/how-to-draw-circles-arcs-and-vector-graphics-in-sdl
