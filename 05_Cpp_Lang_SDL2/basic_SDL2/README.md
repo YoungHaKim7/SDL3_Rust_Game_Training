@@ -4,6 +4,8 @@
 - github
   - https://github.com/QuantitativeBytes/qbRayTrace
 
+# Midpoint_circle_algorithm
+- https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
 
 <hr />
 
