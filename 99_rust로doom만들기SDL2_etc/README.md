@@ -1,3 +1,9 @@
+# C SDl2
+- C and SDL2 game dev resources
+  - https://www.reddit.com/r/C_Programming/comments/scxr46/c_and_sdl2_game_dev_resources/?rdt=55855
+
+<hr />
+
 # raylib
 - https://www.raylib.com/
   - API https://www.raylib.com/cheatsheet/cheatsheet.html
