@@ -120,6 +120,7 @@ version = "0.1.3+SDL3-preview-3.1.6"
 
 - SDL3
   - https://wiki.libsdl.org/SDL3/Tutorials/FrontPage
+  - https://examples.libsdl.org/SDL3/
 
 - SDL2
   - https://wiki.libsdl.org/SDL2/Tutorials
