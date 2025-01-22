@@ -66,6 +66,10 @@ SDL officially supports Windows, macOS, Linux, iOS, and Android, and several oth
 
 <hr / >
 
+# SDL3 최신뉴스[|🔝|](#link)
+- Announcing the SDL 3 official release! SDL 3.0 is finally here!
+  - https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0
+
 # Rust SDL3[|🔝|](#link)
 
 - https://crates.io/crates/sdl3
