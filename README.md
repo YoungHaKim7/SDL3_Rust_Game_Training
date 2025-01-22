@@ -10,6 +10,9 @@
 		  - [macOS설치 방법인데  위 git clone을 마지막에 해줘야함.](#macossdl2-sdl3-설치)
     - LinuxOS
       - [(LinuxOS Install)What you need to do to install SDL is](#linuxos-installwhat-you-need-to-do-to-install-sdl-is)
+
+- [SDL3최신뉴스](#sdl3-최신뉴스)
+
 - [241208진정한개발자!!_Is SDL3 Ready For Production? | Tsoding Daily](https://youtu.be/PuE98lipGU8?si=_HmaD0hT9UK-g5bA)
 
 - [FishShell Setting](#macos-pathfishshell)
@@ -67,7 +70,7 @@ SDL officially supports Windows, macOS, Linux, iOS, and Android, and several oth
 <hr / >
 
 # SDL3 최신뉴스[|🔝|](#link)
-- Announcing the SDL 3 official release! SDL 3.0 is finally here!
+- Announcing the SDL 3 official release! SDL 3.2.0 is finally here!
   - https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0
 
 # Rust SDL3[|🔝|](#link)
