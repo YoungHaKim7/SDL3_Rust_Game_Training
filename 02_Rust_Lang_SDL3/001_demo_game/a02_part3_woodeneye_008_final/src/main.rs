@@ -396,6 +396,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let window = video_subsystem
         .window("Example splitscreen shooter game", 800, 600)
         .position_centered()
+        .resizable()
         .build()
         .map_err(|e| e.to_string())?;
     let canvas = window.into_canvas();
@@ -471,10 +472,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         // Invert the xrel for correct left/right rotation
                         app_state.players[index].yaw = app_state.players[index]
                             .yaw
-                            .wrapping_add((-xrel as i32 * 0x00080000) as u32);
+                            .wrapping_add((-xrel as i32 * 0x00400000) as u32); // 마우스 움직임 빠르게
 
                         // Invert yrel for correct up/down looking
-                        let new_pitch = app_state.players[index].pitch - (yrel as i32 * 0x00080000);
+                        let new_pitch = app_state.players[index].pitch - (yrel as i32 * 0x00400000);
 
                         // Clamp pitch to prevent over-rotation
                         app_state.players[index].pitch = new_pitch.clamp(-0x42000000, 0x42000000);
