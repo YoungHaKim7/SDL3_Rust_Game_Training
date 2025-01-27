@@ -1,0 +1,8 @@
+[package]
+name = "a02_part2_woodeneye_008"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8.5"
+sdl3 = { version = "0", features = [] }
