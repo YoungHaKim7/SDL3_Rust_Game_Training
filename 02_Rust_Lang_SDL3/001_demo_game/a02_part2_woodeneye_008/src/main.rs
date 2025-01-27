@@ -1,6 +1,5 @@
 use sdl3::event::Event;
 use sdl3::keyboard::Keycode;
-// use sdl3::mouse::MouseButton;
 use sdl3::pixels::Color;
 use sdl3::rect::Rect;
 use sdl3::render::Canvas;
@@ -152,12 +151,12 @@ fn draw_circle(canvas: &mut Canvas<Window>, r: f32, x: f32, y: f32) {
     let mut points = Vec::with_capacity(CIRCLE_DRAW_SIDES_LEN);
     for i in 0..CIRCLE_DRAW_SIDES_LEN {
         let ang = 2.0 * PI * i as f64 / CIRCLE_DRAW_SIDES as f64;
-        points.push(sdl3::rect::Point::new(
-            (x + r * (ang.cos()) as f32) as i32,
-            (y + r * (ang.sin()) as f32) as i32,
+        points.push(sdl3::render::FPoint::new(
+            x + r * (ang.cos() as f32),
+            y + r * (ang.sin() as f32),
         ));
     }
-    canvas.draw_lines(unsafe { points.as_slice() });
+    canvas.draw_lines(points.as_slice()).unwrap();
 }
 
 fn draw_clipped_segment(
