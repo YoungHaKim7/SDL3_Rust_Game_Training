@@ -52,6 +52,9 @@ texture.with_lock(None, |buffer: &mut [u8], pitch: usize| {
 })?;
 ```
 
+# SDL 3 해결된 이슈들
+- [SDL 3: Failed to resolve compile time constants for SDL_UINT64_C #3098](https://github.com/rust-lang/rust-bindgen/issues/3098)
+
 
 # sdl3-sys: Low level Rust bindings for SDL 3
 - https://github.com/maia-s/sdl3-sys-rs
