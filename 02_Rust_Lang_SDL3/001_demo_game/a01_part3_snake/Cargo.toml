@@ -1,0 +1,8 @@
+[package]
+name = "a01_part3_snake"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+sdl3 = { version = "0", features = [] }
