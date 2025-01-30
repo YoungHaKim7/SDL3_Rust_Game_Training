@@ -121,6 +121,7 @@ version = "0.1.3+SDL3-preview-3.1.6"
 - [Shader translation library for SDL's GPU API._https://github.com/libsdl-org/SDL_shadercross](https://github.com/libsdl-org/SDL_shadercross)
 
 # 최신 Release[|🔝|](#link)
+- [(250122)Announcing the SDL 3 official release!- SDL 3.0 is finally here](https://github.com/libsdl-org/SDL/releases/tag/release-3.2.0)
 - [https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.6)
 
 # Tutorial[|🔝|](#link)
