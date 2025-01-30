@@ -1,3 +1,5 @@
+// original code : https://github.com/libsdl-org/SDL/tree/main/examples/demo/02-woodeneye-008
+
 use sdl3::event::Event;
 use sdl3::keyboard::Keycode;
 use sdl3::pixels::Color;
