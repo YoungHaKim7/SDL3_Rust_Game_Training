@@ -7,3 +7,7 @@
   - https://github.com/Broderick-Westrope/tetrigo/blob/main/docs/2009-Tetris-Design-Guideline.pdf
 
 - https://tetris.wiki/Tetris_Guideline
+
+# tetris(Rust SDL2)
+
+- 1. https://github.com/YoungHaKim7/SDL3_Rust_Game_Training/commit/fe68cf3cab53fe1c670821a3f418df0c7528c6cf
