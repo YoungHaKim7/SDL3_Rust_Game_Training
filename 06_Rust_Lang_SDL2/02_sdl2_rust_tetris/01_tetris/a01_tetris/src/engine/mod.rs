@@ -29,6 +29,10 @@ impl Engine {
         self.bag.extend_from_slice(PieceKind::ALL.as_slice());
         self.bag.shuffle(&mut self.rng)
     }
+
+    fn place_cursor(&) {
+        // Assert that the piece does not overlap filled cells
+    }
 }
 
 struct Board([bool; Self::SIZE]);
