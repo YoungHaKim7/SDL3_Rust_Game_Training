@@ -7,6 +7,7 @@ pub struct Interface {
 impl Interface {
     pub fn run(engine: Engine) {
         let interface = Self { engine };
+        drop(interface);
         todo!("Run the game")
     }
 }
