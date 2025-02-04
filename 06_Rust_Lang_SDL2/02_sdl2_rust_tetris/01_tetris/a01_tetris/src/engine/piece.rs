@@ -1,8 +1,13 @@
+use cgmath::Zero;
+use std::ops::Neg;
+
 use cgmath::Vector2;
+
+use super::{Coordinate, Offset};
 
 pub struct Piece {
     pub kind: Kind,
-    pub position: Vector2<usize>,
+    pub position: Coordinate,
     pub rotation: Rotation,
 }
 
@@ -17,6 +22,7 @@ pub enum Kind {
     Z,
 }
 
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Rotation {
     N,
     S,
@@ -26,8 +32,31 @@ pub enum Rotation {
 
 impl Piece {
     const CELL_COUNT: usize = 4;
-    pub fn cells(&self) -> Option<impl Iterator<Item = Vector2<usize>>> {
-        self.kind.cells()
+
+    pub fn cells(&self) -> Option<[Coordinate; Self::CELL_COUNT]> {
+        let offsets = self.kind.cells().map(self.rotator()).map(self.positioner());
+        let mut coords = [Coordinate::zero(); Self::CELL_COUNT];
+        for (Offset { x, y }, coord) in offsets.into_iter().zip(&mut coords) {
+            *coord = match (x.try_into(), y.try_into()) {
+                (Ok(x), Ok(y)) => Coordinate { x, y },
+                _ => return None,
+            }
+            // let Some(coord) = offset.try_into() else {
+            //     return None;
+            // };
+        }
+
+        Some(coords)
+    }
+
+    fn rotator(&self) -> impl Fn(Offset) -> Offset + use<'_> {
+        let rotation = self.rotation;
+        move |cell| cell * rotation
+    }
+
+    fn positioner(&self) -> impl Fn(Offset) -> Offset {
+        let position = self.position;
+        move |cell| cell + position
     }
 }
 impl Kind {
@@ -42,7 +71,7 @@ impl Kind {
     ];
 
     // pub fn cells(&self) -> [Vector2<usize>; Piece::CELL_COUNT] {
-    pub fn cells(&self) -> impl IntoIterator<Item = &'static Vector2<isize>> {
+    pub fn cells(&self) -> [Offset; Piece::CELL_COUNT] {
         match self {
             Kind::O => &[(0, 0), (0, 1), (1, 0), (1, 1)],
             Kind::I => &[(-1, 0), (0, 0), (1, 0), (2, 0)],
@@ -52,24 +81,35 @@ impl Kind {
             Kind::S => &[(-1, 0), (0, 0), (0, 1), (1, 1)],
             Kind::Z => &[(-1, 1), (0, 1), (0, 0), (1, 0)],
         }
-        .iter()
-        .map(From::from())
+        .map(Offset::from)
     }
 }
 
-impl<S> std::ops::Mul<Rotation> for Vector2<S>
-where
-    S: std::ops::Neg<Output = S>,
-{
+impl std::ops::Mul<Rotation> for Offset {
     type Output = Self;
 
     fn mul(self, rotation: Rotation) -> Self::Output {
-        // let Vector2 {x, y}
         match rotation {
             Rotation::N => self,
-            Rotation::S => Vector2::new(-self.x, -self.y),
-            Rotation::E => Vector2::new(self.y, -self.x),
-            Rotation::W => todo!(),
+            Rotation::S => Offset::new(-self.x, -self.y),
+            Rotation::E => Offset::new(self.y, -self.x),
+            Rotation::W => Offset::new(-self.y, self.x),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+
+    #[test]
+    fn s_piece_positioning() {
+        let s = Piece {
+            kind: Kind::S,
+            position: Offset(5, 6),
+            rotation: Rotation::W,
+        };
+        assert_eq!(s.cells(), [Coordinate])
     }
 }

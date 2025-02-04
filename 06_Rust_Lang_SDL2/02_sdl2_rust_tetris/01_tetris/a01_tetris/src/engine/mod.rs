@@ -1,11 +1,13 @@
-use piece::{Kind as PieceKind, Piece};
-
 use rand::{
     prelude::{SliceRandom, ThreadRng},
     rng,
 };
 
+use piece::{Kind as PieceKind, Piece};
 mod piece;
+
+type Coordinate = cgmath::Vector2<usize>;
+type Offset = cgmath::Vector2<isize>;
 
 pub struct Engine {
     board: Board,
