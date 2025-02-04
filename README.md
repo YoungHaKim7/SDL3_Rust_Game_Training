@@ -16,7 +16,7 @@
 - [241208진정한개발자!!_Is SDL3 Ready For Production? | Tsoding Daily](https://youtu.be/PuE98lipGU8?si=_HmaD0hT9UK-g5bA)
 
 - [FishShell Setting](#macos-pathfishshell)
-  - [FishShell 전체세팅](#system-cant-find-libsdl3so0-at-runtime)
+  - [FishShell 전체세팅(macOS)](#system-cant-find-libsdl3so0-at-runtime)
 
 - justfile setting
   - [C언어 justfile](#c-justfile)
@@ -247,9 +247,10 @@ CMake Error at build/cmake_install.cmake:46 (file):
 # System can't find libSDL3.so.0 at runtime?[|🔝|](#link)
 - https://stackoverflow.com/questions/78861132/system-cant-find-libsdl3-so-0-at-runtime
 
-- fish PATH set
+- fish PATH set(macOS기준)
 
 ```fish
+# macOS settings
 # Add HomeBrew's bin directory to path so you can use HomeBrew's binaries like `starship`
 # Fish uses `fish_add_path` instead of `export PATH` modify $PATH.
 fish_add_path /opt/homebrew/bin/
