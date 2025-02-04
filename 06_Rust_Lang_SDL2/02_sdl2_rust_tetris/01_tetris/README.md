@@ -17,3 +17,6 @@
   - https://github.com/YoungHaKim7/SDL3_Rust_Game_Training/commit/c5d47e5d2eed3a91750b05315c655a60c68dfb21
 - 3. 테트리스 모양 구현하기
   - https://github.com/YoungHaKim7/SDL3_Rust_Game_Training/commit/a387950857d1c93d85fdce6e0976b4e38ae6e21b
+
+- 4. Rotation and Position (1) 
+  - https://github.com/YoungHaKim7/SDL3_Rust_Game_Training/commit/bb4083832199e1a592d71d31f718ba2688295d15
