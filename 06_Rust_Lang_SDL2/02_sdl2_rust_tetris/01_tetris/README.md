@@ -20,3 +20,6 @@
 
 - 4. Rotation and Position (1) 
   - https://github.com/YoungHaKim7/SDL3_Rust_Game_Training/commit/bb4083832199e1a592d71d31f718ba2688295d15
+
+- 5. Rotation and Position (2)  + test
+  - https://github.com/YoungHaKim7/SDL3_Rust_Game_Training/commit/155bbde7b7767860330b6583c92bf4532059d7ea
