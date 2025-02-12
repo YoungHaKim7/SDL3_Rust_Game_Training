@@ -62,6 +62,7 @@
 ![star](https://img.shields.io/github/stars/revmischa/sdl3-rs.svg)
 
 - Bindings for SDL3 in Rust.
+  - https://github.com/vhspace/sdl3-rs
 
 SDL is the Simple Directmedia Library, a cross-platform library to abstract the platform-specific details for building applications. It takes care of everything from handling events, creating windows, playing audio, accessing device cameras and sensors, locking, GPU access, and much more. See more here: https://wiki.libsdl.org/SDL3/APIByCategory.
 
@@ -86,7 +87,7 @@ SDL officially supports Windows, macOS, Linux, iOS, and Android, and several oth
 # Rust SDL3[|🔝|](#link)
 
 - https://crates.io/crates/sdl3
-  - https://github.com/revmischa/sdl3-rs
+  - https://github.com/vhspace/sdl3-rs
 
 ```
 cargo add sdl3  
