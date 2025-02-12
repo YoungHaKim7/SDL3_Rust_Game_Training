@@ -1,13 +1,10 @@
 use cgmath::Zero;
-use std::ops::Neg;
 
-use cgmath::Vector2;
-
-use super::{Coordinate, Offset};
+use super::{Board, Coordinate, Offset};
 
 pub struct Piece {
     pub kind: Kind,
-    pub position: Coordinate,
+    pub position: Offset,
     pub rotation: Rotation,
 }
 
@@ -35,15 +32,19 @@ impl Piece {
 
     pub fn cells(&self) -> Option<[Coordinate; Self::CELL_COUNT]> {
         let offsets = self.kind.cells().map(self.rotator()).map(self.positioner());
+
         let mut coords = [Coordinate::zero(); Self::CELL_COUNT];
         for (Offset { x, y }, coord) in offsets.into_iter().zip(&mut coords) {
-            *coord = match (x.try_into(), y.try_into()) {
+            let new = match (x.try_into(), y.try_into()) {
                 (Ok(x), Ok(y)) => Coordinate { x, y },
                 _ => return None,
+            };
+
+            if Board::in_bounds(new) {
+                *coord = new;
+            } else {
+                return None;
             }
-            // let Some(coord) = offset.try_into() else {
-            //     return None;
-            // };
         }
 
         Some(coords)
@@ -106,10 +107,13 @@ mod tests {
     #[test]
     fn s_piece_positioning() {
         let s = Piece {
-            kind: Kind::S,
-            position: Offset(5, 6),
+            kind: Kind::Z,
+            position: Offset::new(5, 6),
             rotation: Rotation::W,
         };
-        assert_eq!(s.cells(), [Coordinate])
+        assert_eq!(
+            s.cells(),
+            Some([(4, 5), (4, 6), (5, 6), (5, 7)].map(Coordinate::from))
+        );
     }
 }

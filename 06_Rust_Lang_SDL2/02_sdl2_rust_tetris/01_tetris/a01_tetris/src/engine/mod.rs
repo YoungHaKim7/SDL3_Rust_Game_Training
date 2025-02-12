@@ -32,7 +32,7 @@ impl Engine {
         self.bag.shuffle(&mut self.rng)
     }
 
-    fn place_cursor(&) {
+    fn place_cursor() {
         // Assert that the piece does not overlap filled cells
     }
 }
@@ -43,6 +43,10 @@ impl Board {
     const WIDTH: usize = 10;
     const HEIGHT: usize = 20;
     const SIZE: usize = Self::WIDTH * Self::HEIGHT;
+
+    fn in_bounds(Coordinate { x, y }: Coordinate) -> bool {
+        x < Self::WIDTH && y < Self::HEIGHT
+    }
 
     fn blank() -> Self {
         Self([false; Self::SIZE])
