@@ -7,6 +7,24 @@
 
 <hr />
 
+# Shaderc(glslc)
+- A collection of tools, libraries and tests for shader compilation. At the moment it includes:
+  - https://github.com/google/shaderc
+
+# 컴파일 예시
+
+```
+glslc -O triangle.vert -o triangle.vert.spv
+glslc -O cube.frag -o cube.frag.spv
+glslc -O cube.vert -o cube.vert.spv
+glslc -O cube-texture.frag -o cube-texture.frag.spv
+glslc -O cube-texture.vert -o cube-texture.vert.spv
+```
+
+- https://github.com/vhspace/sdl3-rs/tree/master/examples/shaders
+
+<hr />
+
 # HLSL Tutorials | Ben Cloward
 - https://youtube.com/playlist?list=PL78XDi0TS4lEMvytsE_MoWEpzBcukXv9b&si=zXtEjjrJyFRVaa4F
 
