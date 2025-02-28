@@ -1,6 +1,9 @@
-# C SDl2
+# C SDL2
 - C and SDL2 game dev resources
   - https://www.reddit.com/r/C_Programming/comments/scxr46/c_and_sdl2_game_dev_resources/?rdt=55855
+
+- An OpenGL 2D back-end for the Piston game engine
+  - https://github.com/PistonDevelopers/opengl_graphics
 
 <hr />
 
