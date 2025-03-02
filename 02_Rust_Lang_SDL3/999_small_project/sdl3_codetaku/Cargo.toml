@@ -1,0 +1,8 @@
+[package]
+name = "sdl3_codetaku"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+glam = "0.30.0"
+sdl3 = { version = "0.14.14", features = ["image"] }
