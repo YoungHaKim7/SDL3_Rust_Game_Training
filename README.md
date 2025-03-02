@@ -149,6 +149,7 @@ version = "0.1.3+SDL3-preview-3.1.6"
 
 - SDL3 Install
   - https://wiki.libsdl.org/SDL3/Installation
+  - https://gist.github.com/NoxFly/1067c9fc24024d26b51a6825de5cff74
 
 ```bash
 git clone https://github.com/libsdl-org/SDL
