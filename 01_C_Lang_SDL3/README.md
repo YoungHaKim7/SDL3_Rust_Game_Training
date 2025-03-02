@@ -2,6 +2,11 @@
 
 <hr />
 
+# (영상 모아보기)SDL3/C Topdown Game | zen
+- https://youtube.com/playlist?list=PLgBHxhPr3AsUlkPhMA9xgX_EyEmlwxcJd&si=e0_0kjmaiSCBVcmq
+
+<hr />
+
 # justfile
 
 
